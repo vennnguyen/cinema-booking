@@ -99,4 +99,15 @@
     border-top: 2px solid #d0d0d0;
     padding: 20px 0;
 }
+.closeButton {
+   
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
 
+}

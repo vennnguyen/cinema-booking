@@ -5,10 +5,12 @@ import Member from "../components/icon/member";
 import Menu from "../components/icon/menu";
 import Search from "../components/icon/search";
 import Card from "../components/ui/Card";
+import Signin from "./signin";
 type MenuType = "starshop" | "gocdienanh" | "sukien" | "rap" | "phim";
 const Header = () => {
  
-const [open, setOpen] = useState(false);
+const [open, setOpen] = useState<boolean>(false);
+const [openSignIn, setOpenSignIn] = useState<boolean>(false)
 
 const [openMenu, setOpenMenu] = useState<MenuType | null>(null);
 
@@ -33,8 +35,6 @@ const toggleMenu = (menu: MenuType) => {
               loading="lazy"
               width={115}
               height={60}
-              decoding="async"
-              data-nimg={1}
               className='max-w-min w-[77px] h-[40px] lg:w-[115px] lg:h-[60px] object-cover duration-500 ease-in-out group-hover:opacity-100"
 scale-100 blur-0 grayscale-0)'
               style={{ color: "transparent" }}
@@ -51,8 +51,6 @@ scale-100 blur-0 grayscale-0)'
               loading="lazy"
               width={112}
               height={36}
-              decoding="async"
-              data-nimg={1}
               className='max-w-min w-[84px] h-[27px] lg:w-[112px] lg:h-[36px] inline-block object-cover duration-500 ease-in-out group-hover:opacity-100"
 scale-100 blur-0 grayscale-0)'
               style={{ color: "transparent" }}
@@ -69,8 +67,6 @@ scale-100 blur-0 grayscale-0)'
                   loading="lazy"
                   width="112"
                   height="36"
-                  decoding="async"
-                  data-nimg="1"
                   className='max-w-min w-[84px] h-[27px] lg:w-[112px] lg:h-[36px] object-cover duration-500 ease-in-out group-hover:opacity-100"
       scale-100 blur-0 grayscale-0)'
                   style={{ color: "transparent" }}
@@ -335,7 +331,7 @@ scale-100 blur-0 grayscale-0)'
 
           {/* Phần đăng nhập */}
 
-<div className="hidden xl:flex xl:grow xl:justify-end uppercase items-center relative transition-all duration-300">            <div className="search mr-4">
+<div className="hidden xl:flex xl:grow xl:justify-end items-center relative transition-all duration-300">            <div className="search mr-4">
               <a
                 href=""
                 className="font-light cursor-pointer text-sm text-[#777]"
@@ -344,9 +340,10 @@ scale-100 blur-0 grayscale-0)'
                 <Search />
               </a>
             </div>
-            <a className="ml-2 text-sm text-[#777] capitalize cursor-pointer transition-all duration-300 hover:text-[#f26b38]">
+            <button onClick={() => setOpenSignIn(true)} data-dialog-target="modal" className="ml-2 text-sm text-[#777] capitalize cursor-pointer transition-all duration-300 hover:text-[#f26b38]">
               Đăng nhập
-            </a>
+            </button>
+            <Signin open={openSignIn} setOpen={setOpenSignIn} />
             <div className="hover">
               <div className="px-3 py-7 text-left md:cursor-pointer group relative  transition-all duration-300 flex">
                 <a href="#" className="cursor-pointer logo__header grow-0">
