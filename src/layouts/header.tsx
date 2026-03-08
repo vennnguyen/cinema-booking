@@ -6,11 +6,13 @@ import Menu from "../components/icon/menu";
 import Search from "../components/icon/search";
 import Card from "../components/ui/Card";
 import Signin from "./signin";
+import Register from "./register";
 type MenuType = "starshop" | "gocdienanh" | "sukien" | "rap" | "phim";
 const Header = () => {
  
 const [open, setOpen] = useState<boolean>(false);
 const [openSignIn, setOpenSignIn] = useState<boolean>(false)
+const [openRegister, setOpenRegister] = useState<boolean>(false)
 
 const [openMenu, setOpenMenu] = useState<MenuType | null>(null);
 
@@ -331,7 +333,8 @@ scale-100 blur-0 grayscale-0)'
 
           {/* Phần đăng nhập */}
 
-<div className="hidden xl:flex xl:grow xl:justify-end items-center relative transition-all duration-300">            <div className="search mr-4">
+<div className="hidden xl:flex xl:grow xl:justify-end items-center relative transition-all duration-300">
+              <div className="search mr-4">
               <a
                 href=""
                 className="font-light cursor-pointer text-sm text-[#777]"
@@ -449,14 +452,19 @@ scale-100 blur-0 grayscale-0)'
                         data-nimg={1}
                         className="w-[85px] h-[80px]"
                         style={{ color: "transparent" }}
-                        src="../../images/bear_glx.png"
+                        src="/images/bear_glx.png"
                       />
                       <h3 className="text-sm font-bold not-italic capitalize text-center">
                         Đăng Ký Thành Viên G-star Nhận Ngay Ưu Đãi!
                       </h3>
-                      <button className="w-[96px] h-8 text-white border border-[#f58020] rounded text-[14px] font-bold not-italic bg-[#f58020] hover:text-white transition-all duration-300 ease-in-out focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize cursor-pointer">
+                      <button className="w-[96px] h-8 text-white border border-[#f58020] rounded text-[14px] font-bold not-italic bg-[#f58020] hover:text-white transition-all duration-300 ease-in-out focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize cursor-pointer" 
+                      onClick={()=>{setOpenRegister(true)}}>
                         Đăng ký
+                        
                       </button>
+                      
+                        
+                      
                     </div>
                   </div>
                   </div>
@@ -548,7 +556,7 @@ scale-100 blur-0 grayscale-0)'
               data-nimg={1}
               className="max-w-min w-[87px] h-[27px] inline-block object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
               style={{ color: "transparent" }}
-              src="../../images/btn-ticket.png"
+              src="/images/btn-ticket.png"
             />
           </a>
           <div className="flex justify-center items-center w-full">
@@ -562,7 +570,7 @@ scale-100 blur-0 grayscale-0)'
                   decoding="async"
                   data-nimg={1}
                   style={{ color: "transparent" }}
-                  src="../../images/join-member-Gstar.svg"
+                  src="/images/join-member-Gstar.svg"
                 />
               </a>
             </div>
@@ -788,6 +796,7 @@ scale-100 blur-0 grayscale-0)'
         </div>
         {/*  */}
       </nav>
+      <Register open={openRegister} setOpen={setOpenRegister} />
     </header>
   );
 };

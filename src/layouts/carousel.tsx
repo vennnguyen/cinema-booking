@@ -120,7 +120,7 @@ const HeroSlider = () => {
       </Slider>
 
       {/* QUICK BUY */}
-      <div className="quick-buy hidden xl:grid absolute z-[500] grid-cols-11 max-w-6xl h-14 w-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-white rounded left-2/4 bottom-14 translate-y-1/2 -translate-x-2/4">
+      <div className="quick-buy hidden xl:grid absolute z-50 grid-cols-11 max-w-6xl h-14 w-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-white rounded left-2/4 bottom-14 translate-y-1/2 -translate-x-2/4">
 
         {/* MOVIE */}
         <div

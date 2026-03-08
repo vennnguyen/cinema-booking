@@ -18,7 +18,7 @@ const CardHome = () => {
               decoding="async"
               data-nimg={1}
               className="img__film object-cover duration-500 ease-in-out scale-100 blur-0 grayscale-0"
-              src="../../../public/images/moives/tho-oi.png"
+              src="/images/movies/tho-oi.png"
               style={{ color: "transparent" }}
             />
             <div className="vote">

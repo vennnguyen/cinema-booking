@@ -111,3 +111,11 @@
     display: flex;
 
 }
+.react-date-picker {
+  border: none !important;
+}
+
+.react-date-picker__wrapper {
+  border: none !important;
+}
+.react-calendar { z-index: 9999 }

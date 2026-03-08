@@ -9,7 +9,7 @@ const EyeFlash = () => {
                   focusable="false"
                   data-prefix="fas"
                   data-icon="eye-slash"
-                  className="svg-inline--fa fa-eye-slash text-[#747272] absolute right-2"
+                  className="svg-inline--fa fa-eye-slash text-[#747272] absolute right-2 top-2.5"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 640 512"

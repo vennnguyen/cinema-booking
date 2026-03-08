@@ -1,9 +1,10 @@
-import React from "react";
-import Eye from "../components/icon/eyeFlash";
+import React, { useState } from "react";
+import Eye from "../components/icon/eye";
 import { z } from "zod"; // validate dữ liệu
 import { useForm } from "react-hook-form"; // quản lí trạng thái và sự kiện của form
 import { zodResolver } from "@hookform/resolvers/zod"; //giúp kết nối zod với hookform
 import Close from "../components/icon/close";
+import EyeFlash from "../components/icon/eyeFlash";
 // import { useNavigate } from "react-router-dom";
 // import { useAuthStore } from "@/stores/useAuthStore";
 
@@ -18,10 +19,12 @@ const signInSchema = z.object({
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
+  const [showPassword, setShowPassword] = useState(false);
   // const navigate = useNavigate();
   const {
     register,
-    handleSubmit,reset,
+    handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema), // để kết nối useForm với zod đã định nghĩa
@@ -32,7 +35,7 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
     const { email, password } = data;
     //  await signIn(email,password)
     console.log(email, password);
-    reset()
+    reset();
     setOpen(false);
     //     setTimeout(() => {
     //   navigate(0);
@@ -40,10 +43,10 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
   };
   return (
     <div
-      className={`fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black/60 backdrop-blur-sm transition-opacity duration-300
+      className={`fixed inset-0 z-999 grid h-screen w-screen place-items-center bg-black/60 backdrop-blur-sm transition-opacity duration-300
       ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
     >
-      <div className="relative max-w-[400px] min-w-[200px] rounded-sm px-6 py-10 m-0 bg-white shadow-sm">
+      <div className="relative max-w-100 min-w-50 rounded-sm px-6 py-10 m-0 bg-white shadow-sm">
         <div className="sm:w-[350px]">
           <div className=" text-center mb-4 ">
             <img
@@ -65,14 +68,15 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Email
               </label>
-              <span className="w-full mb-1 relative h-auto border border-gray-200 rounded-sm inline-flex items-center min-w-0 text-sm bg-white rounded transition-all duration-300">
-                <input
-                  type="text"
-                  placeholder="Nhập Email"
-                  className="bg-transparent w-full h-9 focus:ring-2 focus:outline-blue-500 focus:rounded px-2"
-                  {...register("email")}
-                />
-              </span>
+              
+              <input
+  type="text"
+  placeholder="Nhập Email"
+  className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
+  transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+  {...register("email")}
+/>
+
               {errors.email && (
                 <p className="text-red-400 text-sm">{errors.email.message}</p>
               )}
@@ -80,15 +84,23 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Mật khẩu
               </label>
-              <span className="w-full mb-1 relative h-auto border border-gray-200 rounded-sm inline-flex items-center min-w-0 text-sm bg-white rounded transition-all duration-300">
-                <input
-                  type="password"
-                  placeholder="Nhập Mật khẩu"
-                  className="bg-transparent w-full h-9 focus:ring-2 focus:outline-blue-500 focus:rounded px-2"
-                  {...register("password")}
-                />
-                <Eye />
-              </span>
+              
+              <span className="w-full mb-1 relative border border-gray-200 rounded-sm flex items-center bg-white transition-all duration-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Nhập Mật khẩu"
+    className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
+    {...register("password")}
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="pr-2 cursor-pointer"
+  >
+    {showPassword ? <Eye /> : <EyeFlash />}
+  </button>
+</span>
               {errors.password && (
                 <p className="text-red-400 text-sm">
                   {errors.password.message}
@@ -103,18 +115,28 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
                 <span className="block">Đăng nhập</span>{" "}
               </button>
               {/*  */}
+              <div className="text-start mt-[14px] mb-4 "><a className="inline cursor-pointer text-[14px] text-[#212529] font-light hover:text-[#f26b38]  transition-all duration-300">Quên mật khẩu?</a></div>
+
             </form>
           </div>
+          <div className="log__footer text-[14px] pt-6 border-t-gray-300 border-t-3 text-center mt-3">
+  <span>Bạn chưa có tài khoản?</span>
+  <button type="button" className=" cursor-pointer rounded-md hover:bg-[#e38601] transition-all duration-30 min-w-[135px] w-full focus:outline-none focus:ring-[#e38601] text-sm text-center inline-flex items-center dark:hover:bg-[#e38601] dark:focus:ring-[#e38601] justify-center border border-orange-20 text-[#f58020] hover:text-white w-auto px-6 py-[6px] font-light">
+    <span className="block">Đăng ký</span>
+  </button>
+</div>
+
         </div>
         {/* button close */}
-        <button className="closeButton" onClick={()=>{setOpen(!open)
-          reset()
-        }}>
-          <span
-            className="inline-flex bg-grey-100 rounded-full w-[24px] h-[24px] items-center justify-center hover:bg-gray-300"
-            
-          >
-            <Close/>
+        <button
+          className="closeButton"
+          onClick={() => {
+            setOpen(!open);
+            reset();
+          }}
+        >
+          <span className="inline-flex bg-grey-100 rounded-full w-[24px] h-[24px] items-center justify-center hover:bg-gray-300">
+            <Close />
           </span>
         </button>
       </div>

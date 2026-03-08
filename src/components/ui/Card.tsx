@@ -1,5 +1,6 @@
 import React from 'react'
 import Star from '../icon/star'
+import BuyTicket from '../icon/buy-ticket'
 
 const Card = () => {
   return (
@@ -8,8 +9,9 @@ const Card = () => {
             <div className='object-cover rounded relative card__img max-w-full'>
                 <div className='absolute hidden md:block w-full h-full z-10 cursor-pointer bg-[#00000080] transition-all duration-300 ease-in-out opacity-0 hover:opacity-100'>
                     <div className='card__hover__content flex flex-col justify-center items-center w-full h-full'>
-                        <a href="" type='button' className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
-                            
+                        <a href="" type='button' className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center gap-x-2 dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
+                            <BuyTicket/>
+                            <p>Mua vé</p>
                         </a>
                     </div>
                 </div>
@@ -21,7 +23,7 @@ const Card = () => {
   width={140}
   height={200}
   className="w-[140px] h-[200px] object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
-  src="../../../public/images/moives/tho-oi.png"
+  src="/images/movies/tho-oi.png"
 />
 
                 </a>
