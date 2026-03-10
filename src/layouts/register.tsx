@@ -15,32 +15,32 @@ interface RegisterProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const RegisterSchema = z.object({
-  fullName: z.string().min(1, "Họ và tên không được để trống"),
-  phone: z
-  .string()
-  .regex(/^[0-9]{10}$/, "Số điện thoại phải có 10 chữ số"),
-  email: z
-  .string()
-  .min(1, "Email không được để trống")
-  .pipe(z.email("Email không hợp lệ")),
-  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 kí tự"),
-  confirmPassword: z.string(),
-  date: z
-  .date()
-  .nullable()
-  .refine((date) => date !== undefined, {
-    message: "Vui lòng chọn ngày sinh",
+const RegisterSchema = z
+  .object({
+    fullName: z.string().min(1, "Họ và tên không được để trống"),
+    phone: z.string().regex(/^[0-9]{10}$/, "Số điện thoại phải có 10 chữ số"),
+    email: z
+      .string()
+      .min(1, "Email không được để trống")
+      .pipe(z.email("Email không hợp lệ")),
+    password: z.string().min(6, "Mật khẩu phải có ít nhất 6 kí tự"),
+    confirmPassword: z.string(),
+    date: z
+      .date()
+      .nullable()
+      .refine((date) => date !== undefined, {
+        message: "Vui lòng chọn ngày sinh",
+      }),
   })
-}).refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Mật khẩu không khớp",
     path: ["confirmPassword"],
   });
 type RegisterFormValues = z.infer<typeof RegisterSchema>;
 
 const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
- const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   // const navigate = useNavigate();
   const {
     control,
@@ -51,8 +51,8 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(RegisterSchema), // để kết nối useForm với zod đã định nghĩa
     defaultValues: {
-    date: null,
-  },
+      date: null,
+    },
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -89,31 +89,33 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
           {/* form */}
           <div className="register-form">
             <form action="" onSubmit={handleSubmit(onSubmit)}>
-                {/* họ và tên */}
+              {/* họ và tên */}
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Họ và tên
               </label>
               <input
-  type="text"
-  placeholder="Nhập Họ và tên"
-  className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
+                type="text"
+                placeholder="Nhập Họ và tên"
+                className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
   transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-  {...register("fullName")}
-/>
+                {...register("fullName")}
+              />
               {errors.fullName && (
-                <p className="text-red-400 text-sm">{errors.fullName.message}</p>
+                <p className="text-red-400 text-sm">
+                  {errors.fullName.message}
+                </p>
               )}
               {/* email */}
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Email
               </label>
               <input
-  type="text"
-  placeholder="Nhập Email"
-  className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
+                type="text"
+                placeholder="Nhập Email"
+                className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
   transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-  {...register("email")}
-/>
+                {...register("email")}
+              />
               {errors.email && (
                 <p className="text-red-400 text-sm">{errors.email.message}</p>
               )}
@@ -122,12 +124,12 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 Số điện thoại
               </label>
               <input
-  type="text"
-  placeholder="Nhập Số điện thoại"
-  className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
+                type="text"
+                placeholder="Nhập Số điện thoại"
+                className="w-full mb-1 h-9 px-2 text-sm bg-white border border-gray-200 rounded 
   transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-  {...register("phone")}
-/>
+                {...register("phone")}
+              />
               {errors.phone && (
                 <p className="text-red-400 text-sm">{errors.phone.message}</p>
               )}
@@ -136,71 +138,71 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 Ngày sinh
               </label>
               {/* DatePicker */}
-      <span className="w-full mb-1 relative h-auto border  border-gray-200 rounded-sm inline-flex items-center min-w-0 text-sm bg-white transition-all duration-300">
-  <Controller
-    name="date"
-    control={control}
-    render={({ field }) => (
-      <DatePicker
-        onChange={field.onChange}
-        value={field.value}
-        format="dd/MM/yyyy"
-        className="bg-transparent w-full h-9 px-2 focus:outline-none border-none"
-      />
-    )}
-  />
-</span>
+              <span className="w-full mb-1 relative h-auto border  border-gray-200 rounded-sm inline-flex items-center min-w-0 text-sm bg-white transition-all duration-300">
+                <Controller
+                  name="date"
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      onChange={field.onChange}
+                      value={field.value}
+                      format="dd/MM/yyyy"
+                      className="bg-transparent w-full h-9 px-2 focus:outline-none border-none"
+                    />
+                  )}
+                />
+              </span>
 
-{errors.date && (
-  <p className="text-red-400 text-sm">{errors.date.message}</p>
-)}
+              {errors.date && (
+                <p className="text-red-400 text-sm">{errors.date.message}</p>
+              )}
               {/*  */}
               {/* password */}
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Mật khẩu
               </label>
               <span className="w-full mb-1 relative border border-gray-200 rounded-sm flex items-center bg-white transition-all duration-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
-  <input
-    type={showPassword ? "text" : "password"}
-    placeholder="Nhập Mật khẩu"
-    className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
-    {...register("password")}
-  />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Nhập Mật khẩu"
+                  className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
+                  {...register("password")}
+                />
 
-  <button
-    type="button"
-    onClick={() => setShowPassword(!showPassword)}
-    className="pr-2 cursor-pointer"
-  >
-    {showPassword ? <Eye /> : <EyeFlash />}
-  </button>
-</span>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="pr-2 cursor-pointer"
+                >
+                  {showPassword ? <Eye /> : <EyeFlash />}
+                </button>
+              </span>
               {errors.password && (
                 <p className="text-red-400 text-sm">
                   {errors.password.message}
                 </p>
               )}
-          
+
               {/* confirm password */}
               <label className="text-xs block font-bold not-italic text-[#777777]">
                 Nhập lại mật khẩu
               </label>
               <span className="w-full mb-1 relative border border-gray-200 rounded-sm flex items-center bg-white transition-all duration-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
-  <input
-    type={showConfirmPassword ? "text" : "password"}
-    placeholder="Nhập lại Mật khẩu"
-    className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
-    {...register("password")}
-  />
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Nhập lại Mật khẩu"
+                  className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
+                  {...register("password")}
+                />
 
-  <button
-    type="button"
-    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-    className="pr-2 cursor-pointer"
-  >
-    {showConfirmPassword ? <Eye /> : <EyeFlash />}
-  </button>
-</span>
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="pr-2 cursor-pointer"
+                >
+                  {showConfirmPassword ? <Eye /> : <EyeFlash />}
+                </button>
+              </span>
               {errors.password && (
                 <p className="text-red-400 text-sm">
                   {errors.password.message}
@@ -217,11 +219,8 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 <span className="block">Đăng ký</span>{" "}
               </button>
               {/*  */}
-             
             </form>
           </div>
-          
-
         </div>
         {/* button close */}
         <button

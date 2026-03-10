@@ -1,52 +1,397 @@
-import React from 'react'
-import Header from '../../layouts/header'
-import Footer from '../../layouts/footer'
+import React from "react";
+import Header from "../../layouts/header";
+import Footer from "../../layouts/footer";
+import Clock from "../../components/icon/clock";
+import Calendar from "../../components/icon/calendar";
+import Vote from "../../components/icon/vote";
+import DateSlider from "../../layouts/slick";
+import Dropdown from "../../layouts/dropdown";
 
 const BookTicket = () => {
   return (
     <div>
-        <Header/>
-        <div>
-            <div className="relative bg-black flex justify-center w-full h-full">
+      <Header />
+      <div>
+        <div className="relative bg-black flex justify-center w-full h-full">
+          <div className="absolute w-full h-full z-[10] bg-[#0003]"></div>
 
-  <div className="absolute w-full h-full z-[10] bg-[#0003]"></div>
+          <div className="relative h-full">
+            <div className="absolute top-0 left-0 z-[100]">
+              <img
+                src="/images/blur-left.png"
+                className="w-full lg:h-[500px] object-cover lg:block hidden"
+              />
+            </div>
 
-  <div className="relative h-full">
+            <div className="relative">
+              <img
+                src="/images/movies/posters/tho-oi.jpg"
+                className="w-[860px] h-full lg:h-[500px] object-cover"
+              />
 
-    <div className="absolute top-0 left-0 z-[100]">
-      <img
-        src="/images/blur-left.png"
-        className="w-full lg:h-[500px] object-cover lg:block hidden"
-      />
-    </div>
+              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] cursor-pointer">
+                <img
+                  src="/images/button-play.png"
+                  className="w-[40px] h-[40px] lg:w-[64px] lg:h-[64px]"
+                />
+              </button>
+            </div>
 
-    <div className="relative">
-      <img
-        src="/images/movies/posters/tho-oi.jpg"
-        className="w-[860px] h-full lg:h-[500px] object-cover"
-      />
-
-      <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] cursor-pointer">
-        <img
-          src="/images/button-play.png"
-          className="w-[40px] h-[40px] lg:w-[64px] lg:h-[64px]"
-        />
-      </button>
-    </div>
-
-    <div className="absolute top-0 right-0 z-[100] lg:block hidden">
-      <img
-        src="/images/blur-right.png"
-        className="w-full lg:h-[500px] object-cover"
-      />
-    </div>
-
-  </div>
-</div>
+            <div className="absolute top-0 right-0 z-[100] lg:block hidden">
+              <img
+                src="/images/blur-right.png"
+                className="w-full lg:h-[500px] object-cover"
+              />
+            </div>
+          </div>
         </div>
-        <Footer/>
-    </div>
-  )
-}
+        <div className="grid grid-cols-1 xl:grid-cols-7 my-0 mx-auto xl:max-w-7xl lg:max-w-4xl md:max-w-4xl gap-8 py-7 md:px-4 px-4">
+          <div className="book__left lg:col-span-5 w-full ">
+            <div className="flex flex-col">
+              <div className="movie__info relative lg:grid hidden grid-cols-3 lg:gap-5 gap-3 lg:items-end">
+                <div className="movie__thumbnail lg:-translate-y-16 col-span-1 drop-shadow-2xl z-[500]">
+                  <img
+                    alt="Thỏ Ơi!!"
+                    loading="lazy"
+                    width="220"
+                    height="280"
+                    decoding="async"
+                    data-nimg="1"
+                    src="/images/movies/tho-oi.png"
+                    className="border-2 rounded border-white lg:w-[320px] lg:h-100 w-full h-full object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+                    style={{ color: "transparent" }}
+                  />
+                </div>
+                {/* information */}
+                <div className="col-span-2 lg:-translate-y-16 flex flex-col justify-end">
+                  <div className="item__title flex items-center">
+                    <h1 className="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
+                      Thỏ Ơi!!
+                    </h1>
 
-export default BookTicket
+                    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-center text-white font-bold">
+                      T18
+                    </span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <div className="text-sm flex items-center font-semibold">
+                      <Clock />
+                      <span>127 Phút</span>
+                    </div>
+
+                    <div className="text-sm ml-4 flex items-center font-semibold">
+                      <Calendar />
+                      <span>10/02/2026</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-2">
+                    <a className="text-[20px] hover:text-[rgb(245,128,32)] transition duration-500 cursor-pointer flex items-center">
+                      <Vote />
+
+                      <span className="mr-1">9.2</span>
+                      <span className="text-sm text-gray-500">
+                        (2669 votes)
+                      </span>
+                    </a>
+                  </div>
+
+                  <div className="flex flex-col gap-1 mt-2">
+                    <div className="flex text-sm mb-2">
+                      <span className="text-gray-500">Quốc gia:</span>
+                      <span className="ml-4">Việt Nam</span>
+                    </div>
+
+                    <div className="flex text-sm mb-2">
+                      <span className="text-gray-500">Nhà sản xuất:</span>
+                      <span className="ml-4">Trấn Thành Town</span>
+                    </div>
+
+                    <div className="flex text-sm">
+                      <span className="text-gray-500 w-[70px]">Thể loại:</span>
+
+                      <div className="flex gap-2 ml-2">
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Tâm lý
+                        </span>
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Tình cảm
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-sm">
+                      <span className="text-gray-500 w-[70px]">Đạo diễn:</span>
+                      <span className="ml-2 border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                        Trấn Thành
+                      </span>
+                    </div>
+
+                    <div className="flex text-sm">
+                      <span className="text-gray-500 w-[70px]">Diễn viên:</span>
+
+                      <div className="flex flex-wrap gap-2 ml-2">
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Trấn Thành
+                        </span>
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Pháo
+                        </span>
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Lyly
+                        </span>
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Trần Quốc Anh
+                        </span>
+                        <span className="border border-gray-300 px-3 py-1 rounded-lg hover:border-[rgb(245,128,32)]">
+                          Vĩnh Đam
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/*  */}
+              </div>
+            </div>
+            {/* responsive */}
+            <div className="movie__info relative lg:hidden grid grid-cols-1 grid-flow-row md:-mt-16">
+              <div className="movie__thumbnail grid grid-cols-3 gap-3 grid-flow-col">
+                <img
+                  alt="Thỏ Ơi!!"
+                  loading="lazy"
+                  width="220"
+                  height="280"
+                  decoding="async"
+                  data-nimg="1"
+                  src="/images/movies/tho-oi.png"
+                  className="border-2 rounded border-white lg:w-[320px] lg:h-[400px] md:w-full md:h-full w-[120px] h-[160px] object-cover col-span-1 duration-500 ease-in-out"
+                  style={{ color: "transparent" }}
+                />
+
+                <div className="col-span-2 flex flex-col justify-center">
+                  <div className="item__title flex items-center">
+                    <h1 className="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
+                      Thỏ Ơi!!
+                    </h1>
+
+                    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-white font-bold">
+                      T18
+                    </span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <div className="text-sm flex items-center font-semibold">
+                      <Clock />
+                      <span>127 Phút</span>
+                    </div>
+
+                    <div className="text-sm ml-4 flex items-center font-semibold">
+                      <Calendar />
+                      <span>10/02/2026</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 flex items-center text-[20px]">
+                    <Vote />
+
+                    <span className="mr-1">9.2</span>
+                    <span className="text-sm text-gray-500">(2669 votes)</span>
+                  </div>
+
+                  <div className="flex flex-nowrap text-sm">
+                    <span className="h-8 py-[6px] text-gray-500">
+                      Quốc gia:
+                    </span>
+                    <span className="h-8 ml-4 py-[6px]">Việt Nam</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-nowrap items-center text-sm">
+                    <span className="inline-block h-8 py-[6px] text-gray-500 ">
+                      Nhà sản xuất:
+                    </span>
+
+                    <ul className="ml-2 flex flex-wrap flex-1">
+                      <li className="text-sm cursor-pointer hover:text-[rgb(245,128,32)] transition duration-500 ease-in-out">
+                        <span className="mr-[5px]">Trấn Thành Town</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-nowrap items-center text-sm">
+                    <span className="inline-block h-8 py-[6px] text-gray-500 w-[70px] ">
+                      Thể loại:
+                    </span>
+
+                    <ul className="ml-2 flex flex-wrap gap-1 flex-1">
+                      <li className="inline-block">
+                        <a
+                          className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center"
+                          href="/dien-anh/tam-ly/"
+                        >
+                          Tâm lý
+                        </a>
+                      </li>
+
+                      <li className="inline-block">
+                        <a
+                          className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center"
+                          href="/dien-anh/tinh-cam/"
+                        >
+                          Tình cảm
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-nowrap items-start text-sm">
+                    <span className="inline-block h-8 py-[6px] text-gray-500 w-[70px] ">
+                      Đạo diễn:
+                    </span>
+
+                    <ul className="ml-2 flex flex-wrap gap-1 flex-1">
+                      <li className="inline-block">
+                        <a
+                          className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center"
+                          href="/dao-dien/tran-thanh/"
+                        >
+                          Trấn Thành
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-nowrap items-start text-sm">
+                    <span className="inline-block h-8 py-[6px] text-gray-500 w-[70px] ">
+                      Diễn viên:
+                    </span>
+
+                    <ul className="ml-2 flex flex-wrap gap-1 flex-1">
+                      <li className="inline-block">
+                        <a className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center">
+                          Trấn Thành
+                        </a>
+                      </li>
+
+                      <li className="inline-block">
+                        <a className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center">
+                          Pháo
+                        </a>
+                      </li>
+
+                      <li className="inline-block">
+                        <a className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center">
+                          Lyly
+                        </a>
+                      </li>
+
+                      <li className="inline-block">
+                        <a className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center">
+                          Trần Quốc Anh
+                        </a>
+                      </li>
+
+                      <li className="inline-block">
+                        <a className="text-black text-sm inline-flex h-8 border border-gray-300 hover:border-[rgb(245,128,32)] rounded-lg px-4 py-2 capitalize items-center">
+                          Vĩnh Đam
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* content */}
+            <div className="movie__content mt-3 mb-1 lg:mt-0">
+              <span className="border-l-4 border-solid border-blue-800 mr-2"></span>
+
+              <h1 className="mb-4 text-base inline-block capitalize font-bold">
+                Nội dung phim
+              </h1>
+
+              <div className="text-black-10 text-sm font-normal content-text">
+                <p className="mb-1">
+                  <span style={{ fontSize: "15px", lineHeight: "1.6" }}>
+                    Với tâm thế luôn mang đến những điều mới để cho khán giả của
+                    mình không nhàm chán,
+                    <strong> Thỏ Ơi!! </strong>- bộ phim điện ảnh thứ 4 của đạo
+                    diễn Trấn Thành hứa hẹn sẽ mang đến một màu sắc hoàn toàn
+                    khác biệt.
+                  </span>
+                </p>
+
+                <p>
+                  <span style={{ fontSize: "15px", lineHeight: "2" }}>
+                    <a href="#" className="text-[#485fc7]">
+                      Phim mới
+                    </a>{" "}
+                    <strong>Thỏ Ơi!!</strong> dự kiến khởi chiếu 17.02.2026 tại
+                    các{" "}
+                    <a href="#" className="text-[#485fc7]">
+                      rạp chiếu phim
+                    </a>{" "}
+                    toàn quốc.
+                  </span>
+                </p>
+              </div>
+            </div>
+            {/* showtime */}
+            <div className="show__time">
+              <div className="movie__showtime-header">
+                <span className="border-l-4 border-solid border-blue-800 mr-2" />
+                <h1 className="mb-4 text-base inline-block capitalize font-bold">
+                  Lịch chiếu
+                </h1>
+              </div>
+              <div className="movie__filter grid  grid-cols-1 sm:grid-cols-6 lg:grid-cols-5 xl:grid-cols-12 items-center">
+                {/* filter date */}
+                <div className="filter__date order-2 sm:order-1 sm:col-span-3 md:col-span-3 xl:col-span-7 lg:col-span-3 px-7 mt-6 md:mt-0">
+                  <DateSlider />
+                </div>
+                {/* filter location */}
+                <div className="filter__location order-1 sm:order-2 sm:col-span-3 md:col-span-3 xl:col-span-5 lg:col-span-2 grid grid-cols-2 ml-2 gap-1">
+                  <div className="col-span-1">
+                    <Dropdown />
+                  </div>
+                  <div className="col-span-1">
+                    <Dropdown />
+                  </div>
+                </div>
+              </div>
+              <div className="w-full h-0.5 bg-[#034ea2] my-4"></div>
+              {/* showtime list */}
+              <div className="showtime__list">
+                <div className="showtime__cinema md:py-8 py-4 px-3 odd:bg-white even:bg-[#FDFBFA] even:border-t even:border-b">
+                  <h1 className="text-base font-bold mb-4">Galaxy Nguyễn Du</h1>
+                  <div className="showtime__bundle flex md:flex-row flex-col gap-2 items-start mb-6">
+                    <label className="text-sm font-semibold text-grey-10 mt-2 w-[150px]">
+                      2D Phụ Đề
+                    </label>
+                    <div className="time__show flex flex-1 flex-row gap-x-3 gap-y-1 flex-wrap">
+                      <button className="py-2 md:px-8 px-6 border border-gray-300 rounded text-sm font-normal text-black-10  active:bg-[#034ea2]  transition-all duration-500 ease-in-out hover:text-white hover:bg-[#034ea2]">
+                        22:15
+                      </button>
+                      <button className="py-2 md:px-8 px-6 border border-gray-300  rounded text-sm font-normal text-black-10  active:bg-[#034ea2]  transition-all duration-500 ease-in-out hover:text-white hover:bg-[#034ea2]">
+                        22:45
+                      </button>
+                      <button className="py-2 md:px-8 px-6 border border-gray-300  rounded text-sm font-normal text-black-10 h active:bg-[#034ea2]  transition-all duration-500 ease-in-out hover:text-white hover:bg-[#034ea2]">
+                        23:15
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="book__right"></div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default BookTicket;
