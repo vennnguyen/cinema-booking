@@ -6,12 +6,15 @@ import Calendar from "../../components/icon/calendar";
 import Vote from "../../components/icon/vote";
 import DateSlider from "../../layouts/slick";
 import Dropdown from "../../layouts/dropdown";
+import Card from "../../components/ui/Card";
+import img from "/images/movies/whoever-steals-this-book.jpg"
+import ArrowRight from "../../components/icon/arrowRight";
 
 const BookTicket = () => {
   return (
     <div>
       <Header />
-      <div>
+      <div className="mb-4">
         <div className="relative bg-black flex justify-center w-full h-full">
           <div className="absolute w-full h-full z-[10] bg-[#0003]"></div>
 
@@ -346,9 +349,9 @@ const BookTicket = () => {
                   Lịch chiếu
                 </h1>
               </div>
-              <div className="movie__filter grid  grid-cols-1 sm:grid-cols-6 lg:grid-cols-5 xl:grid-cols-12 items-center">
+              <div className="movie__filter grid  grid-cols-1 sm:grid-cols-6 lg:grid-cols-5  xl:grid-cols-12 items-center justify-center">
                 {/* filter date */}
-                <div className="filter__date order-2 sm:order-1 sm:col-span-3 md:col-span-3 xl:col-span-7 lg:col-span-3 px-7 mt-6 md:mt-0">
+                <div className="filter__date order-2 sm:order-1 sm:col-span-3 md:col-span-3 xl:col-span-7 lg:col-span-3 px-7 mt-6 md:mt-0 sm:mt-0 sm:px-4">
                   <DateSlider />
                 </div>
                 {/* filter location */}
@@ -386,7 +389,23 @@ const BookTicket = () => {
               </div>
             </div>
           </div>
-          <div className="book__right"></div>
+          <div className="book__right hidden xl:block lg:col-span-2 w-full overflow-hidden">
+            <div className="mb-4"><span className="border-l-4 border-solid border-blue-10 mr-2" /><h1 className="text-xl inline-block uppercase font-semibold">Phim đang chiếu</h1></div>
+<div className="movie__content">
+  <div className="flex flex-col gap-12 justify-between">
+    <Card w={400} h={250} img={img}/>
+    <Card w={400} h={250} img={img}/>
+    <Card w={400} h={250} img={img}/>
+
+  </div>
+</div>
+<div className="film__footer text-center transition-all duration-300 mt-15">
+                <a href="#" className="text-[#f26b38] hover:text-white w-40 border border-[#fb9440] hover:bg-[#fb9440] transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440] mr-2 mb-2 justify-center">
+                  Xem thêm
+                  <ArrowRight/> 
+                </a>
+              </div>
+          </div>
         </div>
       </div>
       <Footer />

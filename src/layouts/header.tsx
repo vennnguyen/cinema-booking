@@ -7,6 +7,7 @@ import Search from "../components/icon/search";
 import Card from "../components/ui/Card";
 import Signin from "./signin";
 import Register from "./register";
+import img from "/images/movies/tho-oi.png"
 type MenuType = "starshop" | "gocdienanh" | "sukien" | "rap" | "phim";
 const Header = () => {
  
@@ -110,7 +111,7 @@ scale-100 blur-0 grayscale-0)'
                         </div>
                         <ul>
                           <li className="text-sm text-black py-2 transition-all duration-300">
-                            <Card />
+                            <Card img={img}/>
                           </li>
                         </ul>
                       </div>

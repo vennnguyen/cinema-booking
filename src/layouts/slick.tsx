@@ -34,6 +34,14 @@ export default function DateSlider() {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
+     responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+      }
+    },
+     ]
   };
 
   return (
@@ -43,13 +51,13 @@ export default function DateSlider() {
       <button
         onClick={() => sliderRef.current?.slickPrev()}
         className="flex items-center justify-center w-9 h-9
-          transition cursor-pointer"
+          transition cursor-pointer sm:hidden"
       >
         <ArrowLeft />
       </button>
 
       {/* Slider */}
-      <div className="w-[380px]">
+      <div className="w-full max-w-[380px]">
         <Slider ref={sliderRef} {...settings}>
           {dates.map((date, index) => {
             const day = date.getDate().toString().padStart(2, "0");
@@ -83,7 +91,7 @@ export default function DateSlider() {
       <button
         onClick={() => sliderRef.current?.slickNext()}
         className="flex items-center justify-center w-9 h-9
-          transition rounded-full cursor-pointer" 
+          transition rounded-full cursor-pointer sm:hidden" 
       >
         <ArrowRight />
       </button>

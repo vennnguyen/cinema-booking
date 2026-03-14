@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "./pages/client/Home";
-import BookTicket from "./pages/client/Book-ticket";
+import BookTicket from "./pages/client/Show-movie";
+import Booking from "./pages/client/Booking";
 
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Routes>
           {/* public route */}
           <Route path="/" element={<Home />} />
-          <Route path="/dat-ve" element={<BookTicket />} />
+          <Route path="/xuat-chieu" element={<BookTicket />} />
+          <Route path="/dat-ve" element={<Booking />} />
           {/* protected route */}
           {/* <Route element={<ProtectedRoute />}>
             <Route path="/account" element={<AccountPage/>}/>
