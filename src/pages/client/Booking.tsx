@@ -1,11 +1,18 @@
 import React from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
-import data from "../../mock.json";
+// import data from "../../mock.json";
+// import { useBookingStore } from "../../stores/product";
+
+import ChoiceSeat from "../../components/ui/ChoiceSeat";
+import ChoiceFood from "../../components/ui/ChoiceFood";
+import Pay from "../../components/ui/Pay";
+
 const Booking = () => {
-  const seats = data.data.rows;
-  console.log(seats);
-  
+  // const seats = data.data.rows;
+  // const selectedSeats = useBookingStore((state => state.selectedSeats))
+  // const toggleSeat = useBookingStore((state => state.toggleSeat))
+
   return (
     <div>
       <Header />
@@ -75,149 +82,10 @@ const Booking = () => {
         <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px]  grid xl:grid-cols-3 grid-cols-1">
           {/* bên trái */}
           <div className="col-span-2 xl:order-first order-last xl:h-full h-full overflow-hidden xl:overflow-auto xl:pb-10 md:pb-32 pb-10">
-            <div className="bg-white px-6 py-4  rounded md:mb-8 mb-4 w-full">
-              <div className="grid md:grid-cols-10 grid-cols-2">
-                <div className="md:col-span-2">
-                  <label className="md:text-base text-sm font-semibold inline-block mt-2">
-                    Các suất chiếu
-                  </label>
-                </div>
-                <div className="col-span-8 flex-row gap-4 flex-wrap items-center flex">
-                  {Array(11)
-                    .fill("10:00")
-                    .map((time, i) => (
-                      <button
-                        key={i}
-                        className="py-2 px-4 border border-gray-300 rounded text-sm text-gray-800
-      transition-all duration-300 hover:bg-[#034ea2] hover:text-white active:bg-[#034ea2]"
-                      >
-                        {time}
-                      </button>
-                    ))}
-                </div>
-              </div>
-            </div>
-            <div className="bg-white py-4 px-2 rounded md:mb-8 w-full">
-              {/* ghế */}
-              <div className="md:block flex flex-wrap justify-center w-full h-full overflow-auto">
-                <ul className="seat__layout-rows w-full max-w-4xl grid gri gap-3">
-                  {seats.map((seat) => {
-                    return (
-                      <li className="flex items-center justify-between">
-                        <div className="text-sm text-gray-500 font-semibold w-5 text-center">
-                          {seat.name}
-                        </div>
-
-                        <div className="flex flex-1 justify-center gap-1 md:gap-2">
-                          {seat.seats.map((s, i) => {
-                            if (s.type !== 2) {
-                              return (
-                                <button
-                                  key={i}
-                                  className="text-xs md:text-sm w-5 border rounded transition duration-200 ease-in-out flex items-center justify-center gap-1 border-[rgb(208,208,208)] hover:bg-[rgb(245,128,32)] hover:border-[rgb(245,128,32)]"
-                                >
-                                  {s.status === 1 ? (
-                                    <img
-                                      src="/images/thumbnail-shopeepay-logo.png"
-                                      alt="sold"
-                                      height={20}
-                                      width={20}
-                                    />
-                                  ) : (
-                                    <span className="inline-block text-center text-[12px] text-black w-full leading-5">
-                                      {s.id}
-                                    </span>
-                                  )}
-                                </button>
-                              );
-                            }
-
-                            // chỉ render ghế đầu của cặp
-                            if (i % 2 !== 0) return null;
-
-                            const nextSeat = seat.seats[i + 1];
-
-                            return (
-                              <button
-                                key={i}
-                                className="text-xs md:text-sm w-12 border rounded flex items-center justify-center border-[rgb(3,78,162)] hover:bg-[rgb(245,128,32)] hover:border-[rgb(245,128,32)]"
-                                style={{ height: "20px" }}
-                              >
-                                <div className="flex justify-around w-full items-center">
-                                  {s.status === 1 ? (
-                                    <>
-                                      <img
-                                        src="/images/thumbnail-shopeepay-logo.png"
-                                        alt="sold"
-                                        height={20}
-                                        width={20}
-                                      />
-                                      <img
-                                        src="/images/thumbnail-shopeepay-logo.png"
-                                        alt="sold"
-                                        height={20}
-                                        width={20}
-                                      />
-                                    </>
-                                  ) : (
-                                    <>
-                                      <span className="text-[12px]">
-                                        {s.id}
-                                      </span>
-                                      <span className="text-[12px]">
-                                        {nextSeat?.id}
-                                      </span>
-                                    </>
-                                  )}
-                                </div>
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        <div className="text-sm text-gray-500 font-semibold w-5 text-center">
-                          {seat.name}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              {/* màn hình */}
-              <div className="seat__layout-screen mt-4 md:mt-8">
-                <p className="text-base text-center text-[rgb(204,204,204)]">
-                  Màn hình
-                </p>
-                <div className="border-2 border-[rgb(255,132,85)] mt-3"></div>
-                <div className="text-sm flex md:flex-row flex-col-reverse justify-between items-center py-9 gap-2">
-                  <div className="flex gap-2">
-                    <div className="flex items-center">
-                      <img
-                        src="/images/thumbnail-shopeepay-logo.png"
-                        alt="sales"
-                        height={20}
-                        width={20}
-                      />
-                      <span className="ml-2">Ghế đã bán</span>
-                    </div>
-                    <div className="">
-                      <span className="w-5 h-5 rounded bg-[rgb(245,128,32)] inline-block align-middle"></span>
-                      <span className="ml-2">Ghế đang chọn</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 flex-wrap md:justify-end justify-center">
-                    <div className="flex items-center">
-                      <span className="w-5 h-5 rounded border border-[rgb(208,208,208)] inline-block align-middle"></span>
-                      <span className="ml-2">Ghế đơn</span>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="w-[44px] md:w-[48px]  h-5 rounded border border-[rgb(3,78,162)] inline-block align-middle"></span>
-                      <span className="ml-2">Ghế đôi</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* <ChoiceSeat/> */}
+            {/* <ChoiceFood/> */}
+            {/*  */}
+            <Pay/>
           </div>
           {/* bên phải */}
           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
@@ -279,29 +147,115 @@ const Booking = () => {
                     </div>
                   </div>
                   <div className="xl:block hidden">
-  <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden" />
-  <div className="flex justify-between text-sm mt-2">
-    <div>
-      <strong>1x </strong>
-      <span>Ghế đơn</span>
+                    {/* {selectedSeats.length > 0 &&
+  selectedSeats.map((seat) => (
+     <>
+     <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
+    <div key={seat.id} className="flex justify-between text-sm mt-2">
       <div>
-        <span>Ghế: </span>
-        <strong>L2</strong>
+        <strong>1x </strong>
+        <span>Ghế đơn</span>
+        <div>
+          <span>Ghế: </span>
+          <strong>{seat.id}</strong>
+        </div>
       </div>
-    </div>
-    <span className="inline-block font-bold">85.000&nbsp;₫</span>
-  </div>
-</div>
+      <span className="inline-block font-bold">
+        {seat.ticketPrice.toLocaleString()} ₫
+      </span>
+    </div></>
+  ))} */}
+                    <>
+                      <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
+                      <div className="flex justify-between text-sm mt-2">
+                        <div>
+                          <strong>1x </strong>
+                          <span>Ghế đơn</span>
+                          <div>
+                            <span>Ghế: </span>
+                            <strong>H1</strong>
+                          </div>
+                        </div>
+                        <span className="inline-block font-bold">85.000 ₫</span>
+                      </div>
+                    </>
+                  </div>
 
                   <div className="my-4 border-t border-[rgb(153,153,153)] border-dashed xl:block hidden" />
                 </div>
 
                 {/*  */}
-                <div className="xl:flex hidden justify-between col-span-3"><strong className="text-base">Tổng cộng</strong><span className="inline-block font-bold text-primary">85.000&nbsp;₫</span></div>
+                <div className="xl:flex hidden justify-between col-span-3">
+                  <strong className="text-base">Tổng cộng</strong>
+                  <span className="inline-block font-bold text-primary">
+                    85.000&nbsp;₫
+                  </span>
+                </div>
 
                 {/*  */}
               </div>
-              <div className="mt-8 xl:flex hidden"></div>
+              <div className="mt-8 xl:flex hidden">
+                <button className="w-1/2 mr-2 py-2 text-[rgb(245,128,32)]">
+                  <span>Quay lại</span>
+                </button>
+                <button className="w-1/2 ml-2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-20">
+                  <span>Tiếp tục</span>
+                </button>
+              </div>
+            </div>
+            {/* responsive */}
+            <div
+              className="fixed bottom-0 left-0 w-full z-100 bg-white xl:hidden transition-all duration-500 ease-in-out overflow-hidden max-h-[90vh] pb-12 pt-2 border border-[#DFDFDF] rounded-t-xl opacity-100"
+              style={{ height: "auto", minHeight: "auto" }}
+            >
+              <div className="rounded opacity-100 w-full">
+                <img
+                  src="/images/delete.png"
+                  alt="Icon show"
+                  width={45}
+                  height={20}
+                  className="absolute -top-[6%] left-[50%] -translate-x-[50%] brightness-90 grayscale-[20%] z-100"
+                />
+              </div>
+              <div className="grid grid-cols-3 items-center px-4 mb-2 transition relative overflow-hidden  opacity-100">
+                <div className="col-span-3">
+                  <div>
+                    <div className="flex justify-between text-sm mt-2">
+                      <div>
+                        <strong>1x </strong>
+                        <span>Ghế đơn</span>
+                        <div>
+                          <span>Ghế: </span>
+                          <strong>G10</strong>
+                        </div>
+                      </div>
+                      <span className="inline-block font-bold">159.000 ₫</span>
+                    </div>
+                  </div>
+                </div>
+                {/*
+                 */}<div className="fixed bottom-0">
+  <div className="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
+    <strong className="text-sm font-normal text-[rgb(85,85,85)]">
+      Tổng cộng:
+    </strong>
+    <span className="inline-block font-bold text-[rgb(245,128,32)]">
+      159.000 ₫
+    </span>
+  </div>
+  <div className="text-right fixed bottom-0 right-4 h-14 flex items-center">
+    <div>
+      <button className="w-[65px] h-10 py-2 bg-transparent text-[rgb(245,128,32)] text-sm rounded-md">
+        <span>Quay lại</span>
+      </button>
+      <button className="w-[80px] h-10 py-2 bg-[rgb(245,128,32)] text-white border text-sm rounded-md hover:bg-orange-20 ">
+        <span>Tiếp tục</span>
+      </button>
+    </div>
+  </div>
+</div>
+{/*  */}
+              </div>
             </div>
           </div>
         </div>
