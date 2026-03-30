@@ -85,7 +85,7 @@ const Booking = () => {
             {/* <ChoiceSeat/> */}
             {/* <ChoiceFood/> */}
             {/*  */}
-            <Pay/>
+            <Pay />
           </div>
           {/* bên phải */}
           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
@@ -234,27 +234,28 @@ const Booking = () => {
                   </div>
                 </div>
                 {/*
-                 */}<div className="fixed bottom-0">
-  <div className="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
-    <strong className="text-sm font-normal text-[rgb(85,85,85)]">
-      Tổng cộng:
-    </strong>
-    <span className="inline-block font-bold text-[rgb(245,128,32)]">
-      159.000 ₫
-    </span>
-  </div>
-  <div className="text-right fixed bottom-0 right-4 h-14 flex items-center">
-    <div>
-      <button className="w-[65px] h-10 py-2 bg-transparent text-[rgb(245,128,32)] text-sm rounded-md">
-        <span>Quay lại</span>
-      </button>
-      <button className="w-[80px] h-10 py-2 bg-[rgb(245,128,32)] text-white border text-sm rounded-md hover:bg-orange-20 ">
-        <span>Tiếp tục</span>
-      </button>
-    </div>
-  </div>
-</div>
-{/*  */}
+                 */}
+                <div className="fixed bottom-0">
+                  <div className="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
+                    <strong className="text-sm font-normal text-[rgb(85,85,85)]">
+                      Tổng cộng:
+                    </strong>
+                    <span className="inline-block font-bold text-[rgb(245,128,32)]">
+                      159.000 ₫
+                    </span>
+                  </div>
+                  <div className="text-right fixed bottom-0 right-4 h-14 flex items-center">
+                    <div>
+                      <button className="w-[65px] h-10 py-2 bg-transparent text-[rgb(245,128,32)] text-sm rounded-md">
+                        <span>Quay lại</span>
+                      </button>
+                      <button className="w-[80px] h-10 py-2 bg-[rgb(245,128,32)] text-white border text-sm rounded-md hover:bg-orange-20 ">
+                        <span>Tiếp tục</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/*  */}
               </div>
             </div>
           </div>

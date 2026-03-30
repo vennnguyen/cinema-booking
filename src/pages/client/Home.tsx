@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 
@@ -7,9 +7,16 @@ import Location from "../../components/icon/location";
 
 import CardHome from "../../components/ui/CardHome";
 import ArrowRight from "../../components/icon/arrowRight";
+import useMovieStore from "../../stores/product";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const { movies, loading, error, fetchMovies } = useMovieStore();
+
+  useEffect(() => {
+    fetchMovies();
+    
+  }, []);
   return (
     <div>
       <Header />
@@ -97,14 +104,9 @@ const Home = () => {
           <div className="tabs__content">
             <div>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-6 mb-10">
-                <CardHome/>
-               <CardHome/>
-                <CardHome/>
-                <CardHome/>
-               <CardHome/>
-               <CardHome/>
-                <CardHome/>
-                <CardHome/>
+                {movies.slice(0, 8).map((movie) => (
+  <CardHome key={movie.movieId} movie={movie} />
+))}
               </div>
 
               <div className="film__footer text-center transition-all duration-300">

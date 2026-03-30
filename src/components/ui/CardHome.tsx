@@ -2,8 +2,11 @@ import React from "react";
 import Star from "../icon/star";
 import Video from "../icon/video";
 import BuyTicket from "../icon/buy-ticket";
-
-const CardHome = () => {
+import type { Movie } from "../../types/product";
+interface CardHomeProps {
+  movie: Movie;
+}
+const CardHome = ({ movie }: CardHomeProps) => {
   return (
     <div>
       <div className="">
@@ -18,7 +21,7 @@ const CardHome = () => {
               decoding="async"
               data-nimg={1}
               className="img__film object-cover duration-500 ease-in-out scale-100 blur-0 grayscale-0"
-              src="/images/movies/tho-oi.png"
+              src={movie.imagePortrait}
               style={{ color: "transparent" }}
             />
             <div className="vote">
@@ -26,12 +29,12 @@ const CardHome = () => {
                 <span>
                   <Star/>
                 </span>
-                <span className="text-[18px] font-bold text-white">9.2</span>
+                <span className="text-[18px] font-bold text-white">{movie.rate}</span>
               </p>
             </div>
             <div className="age__limit absolute bottom-[6px] right-[6px]">
               <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[#f26b38] rounded text-sm text-center text-white font-bold not-italic">
-                T18
+                T{movie.age}
               </span>
             </div>
 
@@ -75,7 +78,7 @@ const CardHome = () => {
           {/*  */}
         </div>
         <div className="Card_card__title__kFoFc">
-          <h3 className="font-semibold mt-2">Thỏ Ơi!!</h3>
+          <h3 className="font-semibold mt-2">{movie.movieName}</h3>
         </div>
       </div>
     </div>
