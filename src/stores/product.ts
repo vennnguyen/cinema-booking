@@ -27,17 +27,22 @@ const useMovieStore = create<MovieState>((set) => ({
     }
   },
 
-  //   fetchMovieBySlug: async (slug: string) => {
-  //     set({ loading: true, error: null });
-  //     try {
-  //       const res = await fetch(`http://localhost:8080/api/movies/${slug}`);
-  //       if (!res.ok) throw new Error("Không tìm thấy phim");
-  //       const data = await res.json();
-  //       set({ selectedMovie: data, loading: false });
-  //     } catch (err) {
-  //       set({ error: (err as Error).message, loading: false });
-  //     }
-  //   },
+  fetchMovieBySlug: async (slug: string) => {
+    set({ loading: true, error: null });
+    try {
+      const product = await productService.getProductBySlug(slug);
+      set({ selectedMovie: product.data, loading: false });
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Có lỗi xảy ra, vui lòng thử lại";
+
+      toast.error(message);
+      set({ loading: false });
+      throw error;
+    }
+  },
 }));
 
 export default useMovieStore;

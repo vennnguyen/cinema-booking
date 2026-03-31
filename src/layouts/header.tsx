@@ -4,10 +4,10 @@ import Close from "../components/icon/close";
 import Member from "../components/icon/member";
 import Menu from "../components/icon/menu";
 import Search from "../components/icon/search";
-import Card from "../components/ui/Card";
+// import Card from "../components/ui/Card";
 import Signin from "./signin";
 import Register from "./register";
-import img from "/images/movies/tho-oi.png"
+
 type MenuType = "starshop" | "gocdienanh" | "sukien" | "rap" | "phim";
 const Header = () => {
  
@@ -41,7 +41,7 @@ const toggleMenu = (menu: MenuType) => {
               className='max-w-min w-[77px] h-[40px] lg:w-[115px] lg:h-[60px] object-cover duration-500 ease-in-out group-hover:opacity-100"
 scale-100 blur-0 grayscale-0)'
               style={{ color: "transparent" }}
-              src={"images/galaxy-logo-mobile.png"}
+              src={"/images/galaxy-logo-mobile.png"}
             />
           </a>
           {/* repo */}
@@ -111,7 +111,7 @@ scale-100 blur-0 grayscale-0)'
                         </div>
                         <ul>
                           <li className="text-sm text-black py-2 transition-all duration-300">
-                            <Card img={img}/>
+                            {/* <Card img={img}/> */}
                           </li>
                         </ul>
                       </div>

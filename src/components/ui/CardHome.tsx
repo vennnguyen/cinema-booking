@@ -3,6 +3,7 @@ import Star from "../icon/star";
 import Video from "../icon/video";
 import BuyTicket from "../icon/buy-ticket";
 import type { Movie } from "../../types/product";
+import { Link } from "react-router-dom";
 interface CardHomeProps {
   movie: Movie;
 }
@@ -48,14 +49,14 @@ const CardHome = ({ movie }: CardHomeProps) => {
             <div className="absolute h-full w-full bg-black/50 flex justify-center items-center
   -bottom-10 group-hover:bottom-0 opacity-0 group-hover:opacity-100
   transition-all duration-300">
-              <div className="card__hover__content flex flex-col justify-center items-center w-full h-full gap-3">
-                <a
-                  type="button"
+              <Link to={`/xuat-chieu/${movie.slug}`} className="card__hover__content flex flex-col justify-center items-center w-full h-full gap-3">
+                <Link
+                  to={`/xuat-chieu/${movie.slug}`}
                   className="text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440] gap-x-2"
                 >
                   <BuyTicket/>
                   Mua vé
-                </a>
+                </Link>
                 <button
                   type="button"
                   className="text-white w-[120px] h-[40px] border border-white hover:bg-[#fb9440]/80 hover:border-transparent rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440] cursor-pointer"
@@ -63,7 +64,7 @@ const CardHome = ({ movie }: CardHomeProps) => {
                   <Video/>
                   Trailer
                 </button>
-              </div>
+              </Link>
             </div>
 
               

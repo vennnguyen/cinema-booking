@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/client/Home";
-import BookTicket from "./pages/client/Show-movie";
+import BookTicket from "./pages/client/BookTicket";
 import Booking from "./pages/client/Booking";
+import IsShowing from "./pages/client/IsShowing";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
         <Routes>
           {/* public route */}
           <Route path="/" element={<Home />} />
-          <Route path="/xuat-chieu" element={<BookTicket />} />
-          <Route path="/dat-ve" element={<Booking />} />
+          <Route path="/xuat-chieu/:slug" element={<BookTicket />} />
+          <Route path="/dat-ve/:slug" element={<Booking />} />
+          <Route path="/phim-dang-chieu" element={<IsShowing />} />
           {/* protected route */}
           {/* <Route element={<ProtectedRoute />}>
             <Route path="/account" element={<AccountPage/>}/>

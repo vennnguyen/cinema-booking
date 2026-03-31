@@ -2,30 +2,25 @@ import React, { useEffect, useState } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 
-import HeroSlider from "../../layouts/carousel";
 import Location from "../../components/icon/location";
 
 import CardHome from "../../components/ui/CardHome";
-import ArrowRight from "../../components/icon/arrowRight";
+
 import useMovieStore from "../../stores/product";
 
-const Home = () => {
+const IsShowing = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { movies, fetchMovies } = useMovieStore();
 
   useEffect(() => {
     fetchMovies();
-    
   }, []);
   return (
     <div>
       <Header />
       <main className="home-main min-h[100vh]">
-        <HeroSlider />
         {/* main content */}
-        <div
-          className="pb-12 pt-6 my-0 mx-auto xl:max-w-screen-xl lg:max-w-4xl md:max-w-4xl md:px-4 sm:px-[45px] px-[16px]"
-        >
+        <div className="pb-12 pt-6 my-0 mx-auto xl:max-w-screen-xl lg:max-w-4xl md:max-w-4xl md:px-4 sm:px-[45px] px-[16px]">
           {/* top */}
           <div className="flex w-full md:justify-start justify-between gap-5 items-center mb-10">
             <div className="flex">
@@ -95,25 +90,107 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <a href="" className="text-[#034ea2] cursor-pointer md:text-base sm:text-[12px] text-xs mb-1.25 flex items-center justify-center">
-              <Location/>
+            <a
+              href=""
+              className="text-[#034ea2] cursor-pointer md:text-base sm:text-[12px] text-xs mb-1.25 flex items-center justify-center"
+            >
+              <Location />
               <span className="inline-block ml-1">Toàn quốc</span>
             </a>
           </div>
-{/* Content */}
+          {/* Content */}
           <div className="tabs__content">
             <div>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-6 mb-10">
-                {movies.slice(0, 8).map((movie) => (
-  <CardHome key={movie.movieId} movie={movie} />
-))}
+                {movies.map((movie) => (
+                  <CardHome key={movie.movieId} movie={movie} />
+                ))}
               </div>
+            </div>
+          </div>
+        </div>
+        {/* description */}
+        <div className="seo__description">
+          <div className="pb-12 pt-6 my-0 mx-auto xl:max-w-screen-xl lg:max-w-4xl md:max-w-4xl md:px-4 sm:px-[45px] px-[16px]">
+            <div className="mb-8">
+              <span className="border-l-4 border-solid border-[rgb(3,78,162)] mr-2"></span>
+              <h1 className="md:mb-4 text-xl inline-block uppercase font-medium">
+                Phim Đang Chiếu
+              </h1>
+            </div>
 
-              <div className="film__footer text-center transition-all duration-300">
-                <a href="/phim-dang-chieu" className="text-[#f26b38] hover:text-white w-40 border border-[#fb9440] hover:bg-[#fb9440] transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440] mr-2 mb-2 justify-center">
-                  Xem thêm
-                  <ArrowRight/> 
-                </a>
+            <div className="leading-5 content__data__full">
+              <div className="text-sm">
+                <p className="text-[#4a4a4a]" style={{marginBottom: 11}}>
+  <span style={{fontSize: 14}}>
+    <span style={{fontFamily: 'Arial,Helvetica,sans-serif'}}>
+      <span style={{lineHeight: '107%'}}>
+        <span style={{background: 'white'}}>
+          <span style={{letterSpacing: '.15pt'}}>
+            Sau kì nghỉ tết dài, mọi người lại tiếp tục lao vào
+            vòng quay của công việc. Để xóa tan đi bầu không khí
+            "u ám" dịp đi làm của năm mới,
+            <strong> Galaxy Cinema</strong> chiêu đãi các Stars
+            mấy tác phẩm có thể coi là xịn xò nè. Cùng tìm hiểu
+            nha.
+          </span>
+        </span>
+      </span>
+    </span>
+  </span>
+</p>
+                {movies.slice(0, 5).map((movie, index) => {
+  return (
+    <div key={index}>
+      <p style={{ marginBottom: "11px" }}>
+        <a href="">
+          <strong>
+            <span className="text-[#485fc7]"
+              style={{
+                fontSize: "14px",
+                
+                lineHeight: "107%",
+                background: "white",
+                letterSpacing: ".15pt",
+              }}
+            >
+              {`${index + 1}. ${movie.movieName} - ${movie.movietype?.movieTypeName}`}
+            </span>
+          </strong>
+        </a>
+      </p>
+
+      <p style={{ marginBottom: "11px" }} className="text-[#4a4a4a]">
+        <a href="" className="text-[#485fc7]">
+          <strong>
+            <span
+              style={{
+                fontSize: "14px",
+                lineHeight: "107%",
+                background: "white",
+                letterSpacing: ".15pt",
+              }}
+            >
+              {movie.movieName}
+            </span>
+          </strong>
+        </a>{" "}
+        <span className="text-[#4a4a4a]"
+          style={{
+            fontSize: "14px",
+            fontFamily: "Arial,Helvetica,sans-serif",
+            lineHeight: "107%",
+            background: "white",
+            letterSpacing: ".15pt",
+          }}
+        >
+          {movie.description || "Chưa có mô tả"}
+        </span>
+      </p>
+    </div>
+  );
+})}
+
               </div>
             </div>
           </div>
@@ -127,4 +204,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default IsShowing;

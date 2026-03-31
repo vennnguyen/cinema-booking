@@ -15,4 +15,11 @@ export interface Movie {
   duration: number;
   createdAt?: string;
   status: number;
+  country?: string;
+  producer?: string;
+  director?: string;
+  actors?: string[];
+  movietype: {
+    movieTypeName: string;
+  };
 }
