@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 // import data from "../../mock.json";
 // import { useBookingStore } from "../../stores/product";
 
 import ChoiceSeat from "../../components/ui/ChoiceSeat";
-import ChoiceFood from "../../components/ui/ChoiceFood";
-import Pay from "../../components/ui/Pay";
+// import ChoiceFood from "../../components/ui/ChoiceFood";
+// import Pay from "../../components/ui/Pay";
+import { useLocation } from "react-router-dom";
+import useBookingStore from "../../stores/booking";
+
 
 const Booking = () => {
-  // const seats = data.data.rows;
-  // const selectedSeats = useBookingStore((state => state.selectedSeats))
-  // const toggleSeat = useBookingStore((state => state.toggleSeat))
+
+ const { state } = useLocation();
+  const { showDetail, fetchShowDetail, resetBooking } = useBookingStore();
+
+  useEffect(()=>{
+        fetchShowDetail(state.showId); 
+  return () => resetBooking();
+  },[])
+
 
   return (
     <div>
@@ -82,10 +91,12 @@ const Booking = () => {
         <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px]  grid xl:grid-cols-3 grid-cols-1">
           {/* bên trái */}
           <div className="col-span-2 xl:order-first order-last xl:h-full h-full overflow-hidden xl:overflow-auto xl:pb-10 md:pb-32 pb-10">
-            {/* <ChoiceSeat/> */}
+            {showDetail && (
+  <ChoiceSeat startTime={showDetail.startTime} roomId={showDetail.room.roomId} />
+)}
             {/* <ChoiceFood/> */}
             {/*  */}
-            <Pay />
+            {/* <Pay /> */}
           </div>
           {/* bên phải */}
           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
@@ -94,8 +105,8 @@ const Booking = () => {
               <div className="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">
                 <div className="row-span-2 md:row-span-1 xl:row-span-2 block md:hidden xl:block">
                   <img
-                    src="/images/movies/tho-oi.png"
-                    alt="Tho-oi"
+                    src={showDetail?.movie.imagePortrait}
+                    alt={showDetail?.movie.movieName}
                     width={100}
                     height={150}
                     className="xl:w-full xl:h-full md:w-[80px] md:h-[120px] w-[78px] h-[110px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
@@ -104,7 +115,7 @@ const Booking = () => {
                 </div>
                 <div className="row-span-2 md:row-span-1 xl:row-span-2 hidden md:block xl:hidden">
                   <img
-                    alt="Tho-oi"
+                    alt={showDetail?.movie.movieName}
                     loading="lazy"
                     width={100}
                     height={150}
@@ -112,38 +123,53 @@ const Booking = () => {
                     data-nimg={1}
                     className="w-[220px] h-[150px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
                     style={{ color: "transparent" }}
-                    src="/images/movies/tho-oi.png"
+                    src={showDetail?.movie.imagePortrait}
                   />
                 </div>
                 {/*  */}
                 <div className="flex-1 col-span-2 md:col-span-1 xl:col-span-2">
                   <h3 className="text-sm xl:text-base font-bold xl:mb-2">
-                    Thỏ Ơi
+                    {showDetail?.movie.movieName}
                   </h3>
-                  <p className="text-sm inline-block">2D Phụ Đề</p>
-                  <span> - </span>
-                  <div className="xl:mt-2 ml-2 xl:ml-0 inline-block">
-                    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-center text-white font-bold not-italic">
-                      T18
-                    </span>
-                  </div>
+                  <p className="text-sm inline-block">{showDetail?.room.roomtype.roomTypeName}</p>
+                  {showDetail?.movie?.age > 0 && (
+  <div className="xl:mt-2 ml-2 xl:ml-0 inline-block">
+    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-center text-white font-bold not-italic">
+      {`T${showDetail?.movie.age}`}
+    </span>
+  </div>
+)}
                 </div>
 
                 {/*  */}
                 <div className="col-span-2 md:col-span-1 xl:col-span-3">
                   <div>
                     <div className="xl:mt-4 text-sm xl:text-base">
-                      <strong>Galaxy Nguyễn Du</strong>
+                      <strong>{showDetail?.room.cinema.cinemaName}</strong>
                       <span> - </span>
-                      <span className="text-sm xl:text-base">RAP 2</span>
+                      <span className="text-sm xl:text-base">{showDetail?.room.roomName}</span>
                     </div>
                     <div className="xl:mt-2 text-sm xl:text-base">
                       <span>Suất: </span>
-                      <strong>12:15</strong>
+                      <strong>
+  {showDetail?.startTime && !isNaN(new Date(showDetail.startTime).getTime()) && (
+  <strong>
+    {new Date(showDetail.startTime).toISOString().substring(11, 16)}
+  </strong>
+)}
+</strong>
                       <span> - </span>
-                      <span className="capitalize text-sm">
-                        thứ bảy, <strong>14/03/2026</strong>
-                      </span>
+                      {showDetail?.releaseDate && (
+  <span className="capitalize text-sm">
+    {new Date(showDetail.releaseDate).toLocaleDateString("vi-VN", {
+      weekday: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "Asia/Ho_Chi_Minh"
+    })}
+  </span>
+)}
                     </div>
                   </div>
                   <div className="xl:block hidden">

@@ -10,7 +10,7 @@ import Dropdown from "../../layouts/dropdown";
 import Card from "../../components/ui/Card";
 import ArrowRight from "../../components/icon/arrowRight";
 import useMovieStore from "../../stores/product";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useShowtimeStore from "../../stores/showtime";
 
 const formatTime = (timeStr: string) => {
@@ -329,12 +329,14 @@ const BookTicket = () => {
                           {shows
                             .sort((a, b) => a.startTime.localeCompare(b.startTime))
                             .map((show) => (
-                              <button
+                              <Link
+                              state={show}
+                              to={`/dat-ve/${slug}`}
                                 // key={show.showId}
                                 className="py-2 md:px-8 px-6 border border-gray-300 rounded text-sm font-normal text-black-10 active:bg-[#034ea2] transition-all duration-500 ease-in-out hover:text-white hover:bg-[#034ea2]"
                               >
                                 {formatTime(show.startTime)}
-                              </button>
+                              </Link>
                             ))}
                         </div>
                       </div>

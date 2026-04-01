@@ -1,39 +1,11 @@
-// types/seat.ts
-export interface SeatPosition {
-  area: number;
-  row: number;
-  column: number;
-}
-
-export enum SeatStatus {
-  Available = 0,
-  Booked = 1,
-}
-
-export enum SeatType {
-  Standard = 1,
-  Couple = 2,
-}
-
 export interface Seat {
-  id: string;
-  area: number;
-  column: number;
-  row: number;
-  status: SeatStatus;
-  ticketPrice: number;
-  categoryCode: string;
-  description: string;
-  type: SeatType;
-  seatsInGroup: SeatPosition[];
+  seatId: number;
+  seatTypeId: number;
+  roomId: number;
+  seatRow: string;
+  seatColumn: number;
+  status: boolean;
 }
-
-export interface RowSeat {
-  name: string; // ví dụ: "P", "O"
-  index: number;
-  seats: Seat[];
-}
-
-export interface SeatMap {
-  rows: RowSeat[];
+export interface SeatResponse {
+  data: Seat[];
 }
