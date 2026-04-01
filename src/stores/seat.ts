@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { toast } from "sonner";
 import type { SeatState } from "../types/store";
 import { seatService } from "../services/seat.service";
+import type { Seat } from "../types/seat";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -28,21 +29,21 @@ const useSeatStore = create<SeatState>((set, get) => ({
     }
   },
 
-  //   toggleSeat: (seat: Seat) => {
-  //     const { selectedSeats } = get();
-  //     const exists = selectedSeats.find((s) => s.seatId === seat.seatId);
-  //     if (exists) {
-  //       set({
-  //         selectedSeats: selectedSeats.filter((s) => s.seatId !== seat.seatId),
-  //       });
-  //     } else {
-  //       set({ selectedSeats: [...selectedSeats, seat] });
-  //     }
-  //   },
+  toggleSeat: (seat: Seat) => {
+    const { selectedSeats } = get();
+    const exists = selectedSeats.find((s) => s.seatId === seat.seatId);
+    if (exists) {
+      set({
+        selectedSeats: selectedSeats.filter((s) => s.seatId !== seat.seatId),
+      });
+    } else {
+      set({ selectedSeats: [...selectedSeats, seat] });
+    }
+  },
 
-  //   resetSeats: () => {
-  //     set({ seats: [], selectedSeats: [], loading: false, error: null });
-  //   },
+  resetSeats: () => {
+    set({ seats: [], selectedSeats: [], loading: false, error: null });
+  },
 }));
 
 export default useSeatStore;

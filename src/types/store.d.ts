@@ -39,6 +39,6 @@ interface SeatState {
   error: string | null;
 
   fetchSeats: (showId: number) => Promise<void>;
-  // toggleSeat: (seat: Seat) => void;
-  // resetSeats: () => void;
+  toggleSeat: (seat: Seat) => void;
+  resetSeats: () => void;
 }

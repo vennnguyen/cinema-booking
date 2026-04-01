@@ -1,172 +1,4 @@
-// import React, { useEffect } from 'react'
-// import useSeatStore from '../../stores/seat';
-
-
-
-// type Props = {
-//   startTime: string;
-//   roomId: number;
-// };
-// const ChoiceSeat = ({ startTime, roomId }: Props) => {
-//     const {seats, fetchSeats} = useSeatStore()
-//     useEffect(()=>{
-//       fetchSeats(roomId)
-//     },[])
-//     console.log(seats);
-    
-//   return (
-//     <div>
-//         <div className="bg-white px-6 py-4  rounded md:mb-8 mb-4 w-full">
-//               <div className="flex gap-30">
-//                 <div className="md:col-span-2">
-//                   <label className="md:text-base text-sm font-semibold inline-block mt-2">
-//                     Suất chiếu
-//                   </label>
-//                 </div>
-//                 <div className="col-span-8 flex-row gap-4 flex-wrap items-center flex">
-//                   <button
-//                         className="py-2 px-4 border border-gray-300 rounded text-sm 
-//       transition-all duration-300 bg-[#034ea2] text-white active:bg-[#034ea2]"
-//                       >
-//                         {new Date(startTime).toISOString().substring(11, 16)}
-//                       </button>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className="bg-white py-4 px-2 rounded md:mb-8 w-full">
-//               {/* ghế */}
-//               {/* <div className="md:block flex flex-wrap justify-center w-full h-full overflow-auto">
-//                 <ul className="seat__layout-rows w-full max-w-4xl grid gri gap-3">
-//                   {seats.map((seat) => {
-//                     return (
-//                       <li className="flex items-center justify-between">
-//                         <div className="text-sm text-gray-500 font-semibold w-5 text-center">
-//                           {seat.name}
-//                         </div>
-//                         <div className="flex flex-1 justify-center gap-1 md:gap-2">
-//                           {seat.seats.map((s, i) => {
-//                             if (s.type !== 2) {
-//                               return (
-//                                 <button
-//                                   key={i}
-//                                   className={`text-xs md:text-sm w-5 border rounded transition duration-200 ease-in-out flex items-center justify-center gap-1 border-[rgb(208,208,208)] hover:bg-[rgb(245,128,32)] hover:border-[rgb(245,128,32)`}
-//                                >
-//                                   {s.status === 1 ? (
-//                                     <img
-//                                       src="/images/thumbnail-shopeepay-logo.png"
-//                                       alt="sold"
-//                                       height={20}
-//                                       width={20}
-//                                     />
-//                                   ) : (
-//                                     <span 
-//   className={`inline-block text-center text-[12px] w-full leading-5
-//     `}
-// >
-//   {s.id}
-// </span>
-//                                   )}
-//                                 </button>
-//                               );
-//                             }
-//                             // chỉ render ghế đầu của cặp
-//                             if (i % 2 !== 0) return null;
-
-//                             const nextSeat = seat.seats[i + 1];
-
-//                             return (
-//                               <button
-//                                 key={i}
-//                                 className="text-xs md:text-sm w-12 border rounded flex items-center justify-center border-[rgb(3,78,162)] hover:bg-[rgb(245,128,32)] hover:border-[rgb(245,128,32)]"
-//                                 style={{ height: "20px" }}
-//                               >
-//                                 <div className="flex justify-around w-full items-center">
-//                                   {s.status === 1 ? (
-//                                     <>
-//                                       <img
-//                                         src="/images/thumbnail-shopeepay-logo.png"
-//                                         alt="sold"
-//                                         height={20}
-//                                         width={20}
-//                                       />
-//                                       <img
-//                                         src="/images/thumbnail-shopeepay-logo.png"
-//                                         alt="sold"
-//                                         height={20}
-//                                         width={20}
-//                                       />
-//                                     </>
-//                                   ) : (
-//                                     <>
-//                                       <span className="text-[12px]">
-//                                         {s.id}
-//                                       </span>
-//                                       <span className="text-[12px]">
-//                                         {nextSeat?.id}
-//                                       </span>
-//                                     </>
-//                                   )}
-//                                 </div>
-//                               </button>
-//                             );
-//                           })}
-//                         </div>
-
-//                         <div className="text-sm text-gray-500 font-semibold w-5 text-center">
-//                           {seat.name}
-//                         </div>
-//                       </li>
-//                     );
-//                   })}
-//                 </ul>
-//               </div> */}
-//               {/* ghế */}
-//               <div className="md:block flex flex-wrap justify-center w-full h-full overflow-auto">
-//                 <ul className="seat__layout-rows w-full max-w-4xl grid gap-3">
-                  
-//                 </ul>
-//               </div>
-//               {/* màn hình */}
-//               <div className="seat__layout-screen mt-4 md:mt-8">
-//                 <p className="text-base text-center text-[rgb(204,204,204)]">
-//                   Màn hình
-//                 </p>
-//                 <div className="border-2 border-[rgb(255,132,85)] mt-3"></div>
-//                 <div className="text-sm flex md:flex-row flex-col-reverse justify-between items-center py-9 gap-2">
-//                   <div className="flex gap-2">
-//                     <div className="flex items-center">
-//                       <img
-//                         src="/images/thumbnail-shopeepay-logo.png"
-//                         alt="sales"
-//                         height={20}
-//                         width={20}
-//                       />
-//                       <span className="ml-2">Ghế đã bán</span>
-//                     </div>
-//                     <div className="">
-//                       <span className="w-5 h-5 rounded bg-[rgb(245,128,32)] inline-block align-middle"></span>
-//                       <span className="ml-2">Ghế đang chọn</span>
-//                     </div>
-//                   </div>
-//                   <div className="flex gap-2 flex-wrap md:justify-end justify-center">
-//                     <div className="flex items-center">
-//                       <span className="w-5 h-5 rounded border border-[rgb(208,208,208)] inline-block align-middle"></span>
-//                       <span className="ml-2">Ghế đơn</span>
-//                     </div>
-//                     <div className="flex items-center">
-//                       <span className="w-[44px] md:w-[48px]  h-5 rounded border border-[rgb(3,78,162)] inline-block align-middle"></span>
-//                       <span className="ml-2">Ghế đôi</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//     </div>
-//   )
-// }
-
-// export default ChoiceSeat
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import useSeatStore from "../../stores/seat";
 
 type Props = {
@@ -186,8 +18,7 @@ const formatTime = (timeStr: string) => {
 };
 
 const ChoiceSeat = ({ startTime, roomId }: Props) => {
-  const { seats, fetchSeats } = useSeatStore();
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const { seats, fetchSeats, selectedSeats, toggleSeat } = useSeatStore();
 
   useEffect(() => {
     fetchSeats(roomId);
@@ -201,15 +32,14 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
     }, {} as Record<string, typeof seats>);
   }, [seats]);
 
-  const toggle = (ids: number[]) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      ids.forEach((id) => (next.has(id) ? next.delete(id) : next.add(id)));
-      return next;
+  const selectedIds = new Set(selectedSeats.map((s) => s.seatId));
+
+  const toggle = (seatIds: number[]) => {
+    seatIds.forEach((id) => {
+      const seat = seats.find((s) => s.seatId === id);
+      if (seat) toggleSeat(seat);
     });
   };
-
-  const selectedSeats = seats.filter((s) => selectedIds.has(s.seatId));
 
   return (
     <div>
@@ -242,15 +72,10 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
 
               return (
                 <div key={row} className="flex items-center gap-1">
-                  {/* Label trái */}
-                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">
-                    {row}
-                  </span>
-
+                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">{row}</span>
                   <div className="flex gap-1 items-center">
                     {sorted.map((seat, i) => {
                       if (isCouple && i % 2 !== 0) return null;
-
                       const next = isCouple ? sorted[i + 1] : null;
                       const ids = isCouple
                         ? ([seat.seatId, next?.seatId].filter(Boolean) as number[])
@@ -278,27 +103,18 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
                           <button
                             disabled={isBooked}
                             onClick={() => toggle(ids)}
-                            title={`${seat.seatRow}${seat.seatColumn}`}
-                            className={`
-                              h-7 rounded-t-md rounded-b-sm border-[1.5px] text-[10px] font-medium
-                              transition-all duration-150 flex-shrink-0
-                              ${isCouple ? "w-16" : "w-7"}
-                              ${seatClass}
-                            `}
+                            title={`${seat.seatRow}${seat.seatColumn} - ${seat.prices?.[0]?.price?.toLocaleString() ?? ""}₫`}
+                            className={`h-7 rounded-t-md rounded-b-sm border-[1.5px] text-[10px] font-medium transition-all duration-150 flex-shrink-0 ${isCouple ? "w-16" : "w-7"} ${seatClass}`}
                           >
                             {isCouple
-                              ? `${seat.seatColumn}·${next?.seatColumn ?? ""}`
-                              : seat.seatColumn}
+    ? `${seat.seatRow}${seat.seatColumn}·${next?.seatRow ?? ""}${next?.seatColumn ?? ""}`
+    : `${seat.seatRow}${seat.seatColumn}`}
                           </button>
                         </React.Fragment>
                       );
                     })}
                   </div>
-
-                  {/* Label phải */}
-                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">
-                    {row}
-                  </span>
+                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">{row}</span>
                 </div>
               );
             })}
@@ -331,24 +147,6 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
             </div>
           </div>
         </div>
-
-        {/* Tóm tắt ghế đã chọn */}
-        {selectedSeats.length > 0 && (
-          <div className="mt-4 p-3 bg-gray-50 rounded-lg flex items-center justify-between">
-            <div>
-              <p className="text-xs text-gray-400">Đã chọn</p>
-              <p className="text-sm font-semibold text-gray-700">
-                {selectedSeats.map((s) => `${s.seatRow}${s.seatColumn}`).join(", ")}
-                <span className="ml-2 text-xs font-normal text-gray-400">
-                  ({selectedSeats.length} ghế)
-                </span>
-              </p>
-            </div>
-            <button className="py-2 px-5 bg-[#034ea2] text-white text-sm rounded transition hover:bg-[#023a7a]">
-              Tiếp tục
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

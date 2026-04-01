@@ -1,287 +1,511 @@
+// import React, { useEffect } from "react";
+// import Header from "../../layouts/header";
+// import Footer from "../../layouts/footer";
+// // import data from "../../mock.json";
+// // import { useBookingStore } from "../../stores/product";
+
+// import ChoiceSeat from "../../components/ui/ChoiceSeat";
+// // import ChoiceFood from "../../components/ui/ChoiceFood";
+// // import Pay from "../../components/ui/Pay";
+// import { useLocation } from "react-router-dom";
+// import useBookingStore from "../../stores/booking";
+
+
+// const Booking = () => {
+
+//  const { state } = useLocation();
+//   const { showDetail, fetchShowDetail, resetBooking } = useBookingStore();
+
+//   useEffect(()=>{
+//         fetchShowDetail(state.showId); 
+//   return () => resetBooking();
+//   },[])
+
+
+//   return (
+//     <div>
+//       <Header />
+//       <div
+//         className="block border-b border-[#f4f4f4]"
+//         style={{ transform: "matrix(1, 0, 0, -1, 0, 0)" }}
+//       ></div>
+//       <main className="booking__wrapper bg-[rgb(249,249,249)] md:pb-0">
+//         <div className="booking__progress-bar flex justify-center items-center flex-nowrap bg-white relative md:mb-8 mb-0 w-full overflow-auto">
+//           <ul className="flex  justify-center items-center text-grey-20 md:text-base text-[12px] font-semibold w-full flex-nowrap">
+//             <li className="pt-4 mb-4 pl-0 text-[rgb(88,142,202)]">
+//               <button className="md:mx-3 mx-1 ml-0">
+//                 Chọn phim / Rạp / Suất
+//               </button>
+
+//               <div
+//                 className="relative mt-4 h-0.5
+//     before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef]
+//     after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]"
+//               ></div>
+//             </li>
+//             {/* Chọn ghế */}
+//             <li className="pt-4 mb-4 pl-0 text-[rgb(3,78,162)]">
+//               <button className="md:mx-3 mx-1">Chọn ghế</button>
+//               <div
+//                 className="relative mt-4 h-0.5
+//     before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef]
+//     after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]"
+//               ></div>
+//             </li>
+//             {/* Chọn thức ăn */}
+//             <li className="pt-4 mb-4 pl-0">
+//               <button className="md:mx-3 mx-1 text-[#d3d0d0]">
+//                 Chọn thức ăn
+//               </button>
+//               <div
+//                 className="relative mt-4 h-0.5
+//     before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
+//     "
+//                 // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
+//               ></div>
+//             </li>
+//             {/* Thanh toán */}
+//             <li className="pt-4 mb-4 pl-0">
+//               <button className="md:mx-3 mx-1 text-[#d3d0d0]">
+//                 Thanh toán
+//               </button>
+//               <div
+//                 className="relative mt-4 h-0.5
+//     before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
+//     "
+//                 // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
+//               ></div>
+//             </li>
+//             {/* Xác nhận */}
+//             <li className="pt-4 mb-4 pl-0">
+//               <button className="md:mx-3 mx-1 text-[#d3d0d0]">Xác nhận</button>
+//               <div
+//                 className="relative mt-4 h-0.5
+//     before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
+//     "
+//                 // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
+//               ></div>
+//             </li>
+//           </ul>
+//         </div>
+//         <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px]  grid xl:grid-cols-3 grid-cols-1">
+//           {/* bên trái */}
+//           <div className="col-span-2 xl:order-first order-last xl:h-full h-full overflow-hidden xl:overflow-auto xl:pb-10 md:pb-32 pb-10">
+//             {showDetail && (
+//   <ChoiceSeat startTime={showDetail.startTime} roomId={showDetail.room.roomId} />
+// )}
+//             {/* <ChoiceFood/> */}
+//             {/*  */}
+//             {/* <Pay /> */}
+//           </div>
+//           {/* bên phải */}
+//           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
+//             <div className="booking__summary md:mb-4">
+//               <div className="h-[6px] bg-rgb(245,128,32) rounded-t-lg"></div>
+//               <div className="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">
+//                 <div className="row-span-2 md:row-span-1 xl:row-span-2 block md:hidden xl:block">
+//                   <img
+//                     src={showDetail?.movie.imagePortrait}
+//                     alt={showDetail?.movie.movieName}
+//                     width={100}
+//                     height={150}
+//                     className="xl:w-full xl:h-full md:w-[80px] md:h-[120px] w-[78px] h-[110px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+//                     style={{ color: "transparent" }}
+//                   />
+//                 </div>
+//                 <div className="row-span-2 md:row-span-1 xl:row-span-2 hidden md:block xl:hidden">
+//                   <img
+//                     alt={showDetail?.movie.movieName}
+//                     loading="lazy"
+//                     width={100}
+//                     height={150}
+//                     decoding="async"
+//                     data-nimg={1}
+//                     className="w-[220px] h-[150px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+//                     style={{ color: "transparent" }}
+//                     src={showDetail?.movie.imagePortrait}
+//                   />
+//                 </div>
+//                 {/*  */}
+//                 <div className="flex-1 col-span-2 md:col-span-1 xl:col-span-2">
+//                   <h3 className="text-sm xl:text-base font-bold xl:mb-2">
+//                     {showDetail?.movie.movieName}
+//                   </h3>
+//                   <p className="text-sm inline-block">{showDetail?.room.roomtype.roomTypeName}</p>
+//                   {showDetail?.movie?.age > 0 && (
+//   <div className="xl:mt-2 ml-2 xl:ml-0 inline-block">
+//     <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-center text-white font-bold not-italic">
+//       {`T${showDetail?.movie.age}`}
+//     </span>
+//   </div>
+// )}
+//                 </div>
+
+//                 {/*  */}
+//                 <div className="col-span-2 md:col-span-1 xl:col-span-3">
+//                   <div>
+//                     <div className="xl:mt-4 text-sm xl:text-base">
+//                       <strong>{showDetail?.room.cinema.cinemaName}</strong>
+//                       <span> - </span>
+//                       <span className="text-sm xl:text-base">{showDetail?.room.roomName}</span>
+//                     </div>
+//                     <div className="xl:mt-2 text-sm xl:text-base">
+//                       <span>Suất: </span>
+//                       <strong>
+//   {showDetail?.startTime && !isNaN(new Date(showDetail.startTime).getTime()) && (
+//   <strong>
+//     {new Date(showDetail.startTime).toISOString().substring(11, 16)}
+//   </strong>
+// )}
+// </strong>
+//                       <span> - </span>
+//                       {showDetail?.releaseDate && (
+//   <span className="capitalize text-sm">
+//     {new Date(showDetail.releaseDate).toLocaleDateString("vi-VN", {
+//       weekday: "long",
+//       day: "2-digit",
+//       month: "2-digit",
+//       year: "numeric",
+//       timeZone: "Asia/Ho_Chi_Minh"
+//     })}
+//   </span>
+// )}
+//                     </div>
+//                   </div>
+//                   <div className="xl:block hidden">
+//                     {/* {selectedSeats.length > 0 &&
+//   selectedSeats.map((seat) => (
+//      <>
+//      <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
+//     <div key={seat.id} className="flex justify-between text-sm mt-2">
+//       <div>
+//         <strong>1x </strong>
+//         <span>Ghế đơn</span>
+//         <div>
+//           <span>Ghế: </span>
+//           <strong>{seat.id}</strong>
+//         </div>
+//       </div>
+//       <span className="inline-block font-bold">
+//         {seat.ticketPrice.toLocaleString()} ₫
+//       </span>
+//     </div></>
+//   ))} */}
+//                     <>
+//                       <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
+//                       <div className="flex justify-between text-sm mt-2">
+//                         <div>
+//                           <strong>1x </strong>
+//                           <span>Ghế đơn</span>
+//                           <div>
+//                             <span>Ghế: </span>
+//                             <strong>H1</strong>
+//                           </div>
+//                         </div>
+//                         <span className="inline-block font-bold">85.000 ₫</span>
+//                       </div>
+//                     </>
+//                   </div>
+
+//                   <div className="my-4 border-t border-[rgb(153,153,153)] border-dashed xl:block hidden" />
+//                 </div>
+
+//                 {/*  */}
+//                 <div className="xl:flex hidden justify-between col-span-3">
+//                   <strong className="text-base">Tổng cộng</strong>
+//                   <span className="inline-block font-bold text-primary">
+//                     85.000&nbsp;₫
+//                   </span>
+//                 </div>
+
+//                 {/*  */}
+//               </div>
+//               <div className="mt-8 xl:flex hidden">
+//                 <button className="w-1/2 mr-2 py-2 text-[rgb(245,128,32)]">
+//                   <span>Quay lại</span>
+//                 </button>
+//                 <button className="w-1/2 ml-2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-20">
+//                   <span>Tiếp tục</span>
+//                 </button>
+//               </div>
+//             </div>
+//             {/* responsive */}
+//             <div
+//               className="fixed bottom-0 left-0 w-full z-100 bg-white xl:hidden transition-all duration-500 ease-in-out overflow-hidden max-h-[90vh] pb-12 pt-2 border border-[#DFDFDF] rounded-t-xl opacity-100"
+//               style={{ height: "auto", minHeight: "auto" }}
+//             >
+//               <div className="rounded opacity-100 w-full">
+//                 <img
+//                   src="/images/delete.png"
+//                   alt="Icon show"
+//                   width={45}
+//                   height={20}
+//                   className="absolute -top-[6%] left-[50%] -translate-x-[50%] brightness-90 grayscale-[20%] z-100"
+//                 />
+//               </div>
+//               <div className="grid grid-cols-3 items-center px-4 mb-2 transition relative overflow-hidden  opacity-100">
+//                 <div className="col-span-3">
+//                   <div>
+//                     <div className="flex justify-between text-sm mt-2">
+//                       <div>
+//                         <strong>1x </strong>
+//                         <span>Ghế đơn</span>
+//                         <div>
+//                           <span>Ghế: </span>
+//                           <strong>G10</strong>
+//                         </div>
+//                       </div>
+//                       <span className="inline-block font-bold">159.000 ₫</span>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 {/*
+//                  */}
+//                 <div className="fixed bottom-0">
+//                   <div className="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
+//                     <strong className="text-sm font-normal text-[rgb(85,85,85)]">
+//                       Tổng cộng:
+//                     </strong>
+//                     <span className="inline-block font-bold text-[rgb(245,128,32)]">
+//                       159.000 ₫
+//                     </span>
+//                   </div>
+//                   <div className="text-right fixed bottom-0 right-4 h-14 flex items-center">
+//                     <div>
+//                       <button className="w-[65px] h-10 py-2 bg-transparent text-[rgb(245,128,32)] text-sm rounded-md">
+//                         <span>Quay lại</span>
+//                       </button>
+//                       <button className="w-[80px] h-10 py-2 bg-[rgb(245,128,32)] text-white border text-sm rounded-md hover:bg-orange-20 ">
+//                         <span>Tiếp tục</span>
+//                       </button>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 {/*  */}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </main>
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default Booking;
+
+
 import React, { useEffect } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
-// import data from "../../mock.json";
-// import { useBookingStore } from "../../stores/product";
-
 import ChoiceSeat from "../../components/ui/ChoiceSeat";
-// import ChoiceFood from "../../components/ui/ChoiceFood";
-// import Pay from "../../components/ui/Pay";
 import { useLocation } from "react-router-dom";
 import useBookingStore from "../../stores/booking";
-
+import useSeatStore from "../../stores/seat";
 
 const Booking = () => {
-
- const { state } = useLocation();
+  const { state } = useLocation();
   const { showDetail, fetchShowDetail, resetBooking } = useBookingStore();
+  const { selectedSeats, resetSeats } = useSeatStore();
 
-  useEffect(()=>{
-        fetchShowDetail(state.showId); 
-  return () => resetBooking();
-  },[])
+  useEffect(() => {
+    fetchShowDetail(state.showId);
+    return () => {
+      resetBooking();
+      resetSeats();
+    };
+  }, []);
 
+  const totalPrice = selectedSeats.reduce((sum, s) => {
+    const price = s.prices?.[0]?.price ?? 0;
+    return sum + Number(price);
+  }, 0);
+
+  const formatTime = (timeStr: string) => {
+    if (!timeStr) return "";
+    if (timeStr.includes(":") && timeStr.length <= 8) return timeStr.slice(0, 5);
+    return new Date(timeStr).toLocaleTimeString("vi-VN", {
+      hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC",
+    });
+  };
 
   return (
     <div>
       <Header />
-      <div
-        className="block border-b border-[#f4f4f4]"
-        style={{ transform: "matrix(1, 0, 0, -1, 0, 0)" }}
-      ></div>
-      <main className="booking__wrapper bg-[rgb(249,249,249)] md:pb-0">
-        <div className="booking__progress-bar flex justify-center items-center flex-nowrap bg-white relative md:mb-8 mb-0 w-full overflow-auto">
-          <ul className="flex  justify-center items-center text-grey-20 md:text-base text-[12px] font-semibold w-full flex-nowrap">
-            <li className="pt-4 mb-4 pl-0 text-[rgb(88,142,202)]">
-              <button className="md:mx-3 mx-1 ml-0">
-                Chọn phim / Rạp / Suất
-              </button>
+      <div className="block border-b border-[#f4f4f4]" style={{ transform: "matrix(1, 0, 0, -1, 0, 0)" }} />
 
-              <div
-                className="relative mt-4 h-0.5
-    before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef]
-    after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]"
-              ></div>
-            </li>
-            {/* Chọn ghế */}
-            <li className="pt-4 mb-4 pl-0 text-[rgb(3,78,162)]">
-              <button className="md:mx-3 mx-1">Chọn ghế</button>
-              <div
-                className="relative mt-4 h-0.5
-    before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef]
-    after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]"
-              ></div>
-            </li>
-            {/* Chọn thức ăn */}
-            <li className="pt-4 mb-4 pl-0">
-              <button className="md:mx-3 mx-1 text-[#d3d0d0]">
-                Chọn thức ăn
-              </button>
-              <div
-                className="relative mt-4 h-0.5
-    before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
-    "
-                // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
-              ></div>
-            </li>
-            {/* Thanh toán */}
-            <li className="pt-4 mb-4 pl-0">
-              <button className="md:mx-3 mx-1 text-[#d3d0d0]">
-                Thanh toán
-              </button>
-              <div
-                className="relative mt-4 h-0.5
-    before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
-    "
-                // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
-              ></div>
-            </li>
-            {/* Xác nhận */}
-            <li className="pt-4 mb-4 pl-0">
-              <button className="md:mx-3 mx-1 text-[#d3d0d0]">Xác nhận</button>
-              <div
-                className="relative mt-4 h-0.5
-    before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[rgb(233,236,239)]
-    "
-                // after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]
-              ></div>
-            </li>
+      <main className="booking__wrapper bg-[rgb(249,249,249)] md:pb-0">
+        {/* Progress bar */}
+        <div className="booking__progress-bar flex justify-center items-center flex-nowrap bg-white relative md:mb-8 mb-0 w-full overflow-auto">
+          <ul className="flex justify-center items-center text-grey-20 md:text-base text-[12px] font-semibold w-full flex-nowrap">
+            {["Chọn phim / Rạp / Suất", "Chọn ghế", "Chọn thức ăn", "Thanh toán", "Xác nhận"].map((step, i) => (
+              <li key={step} className="pt-4 mb-4 pl-0" style={{ color: i === 1 ? "rgb(3,78,162)" : i === 0 ? "rgb(88,142,202)" : "#d3d0d0" }}>
+                <button className="md:mx-3 mx-1">{step}</button>
+                <div className={`relative mt-4 h-0.5 before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef] ${i <= 1 ? "after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]" : ""}`} />
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px]  grid xl:grid-cols-3 grid-cols-1">
-          {/* bên trái */}
+
+        <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px] grid xl:grid-cols-3 grid-cols-1">
+          {/* Bên trái — sơ đồ ghế */}
           <div className="col-span-2 xl:order-first order-last xl:h-full h-full overflow-hidden xl:overflow-auto xl:pb-10 md:pb-32 pb-10">
             {showDetail && (
-  <ChoiceSeat startTime={showDetail.startTime} roomId={showDetail.room.roomId} />
-)}
-            {/* <ChoiceFood/> */}
-            {/*  */}
-            {/* <Pay /> */}
+              <ChoiceSeat
+                startTime={showDetail.startTime}
+                roomId={showDetail.room.roomId}
+              />
+            )}
           </div>
-          {/* bên phải */}
+
+          {/* Bên phải — tóm tắt */}
           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
             <div className="booking__summary md:mb-4">
-              <div className="h-[6px] bg-rgb(245,128,32) rounded-t-lg"></div>
+              <div className="h-[6px] bg-[rgb(245,128,32)] rounded-t-lg" />
               <div className="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">
+                {/* Ảnh phim */}
                 <div className="row-span-2 md:row-span-1 xl:row-span-2 block md:hidden xl:block">
                   <img
                     src={showDetail?.movie.imagePortrait}
                     alt={showDetail?.movie.movieName}
-                    width={100}
-                    height={150}
-                    className="xl:w-full xl:h-full md:w-[80px] md:h-[120px] w-[78px] h-[110px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+                    width={100} height={150}
+                    className="xl:w-full xl:h-full w-[78px] h-[110px] rounded object-cover"
                     style={{ color: "transparent" }}
                   />
                 </div>
                 <div className="row-span-2 md:row-span-1 xl:row-span-2 hidden md:block xl:hidden">
                   <img
-                    alt={showDetail?.movie.movieName}
-                    loading="lazy"
-                    width={100}
-                    height={150}
-                    decoding="async"
-                    data-nimg={1}
-                    className="w-[220px] h-[150px] rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
-                    style={{ color: "transparent" }}
                     src={showDetail?.movie.imagePortrait}
+                    alt={showDetail?.movie.movieName}
+                    width={100} height={150}
+                    className="w-[220px] h-[150px] rounded object-cover"
+                    style={{ color: "transparent" }}
                   />
                 </div>
-                {/*  */}
+
+                {/* Thông tin phim */}
                 <div className="flex-1 col-span-2 md:col-span-1 xl:col-span-2">
                   <h3 className="text-sm xl:text-base font-bold xl:mb-2">
                     {showDetail?.movie.movieName}
                   </h3>
                   <p className="text-sm inline-block">{showDetail?.room.roomtype.roomTypeName}</p>
                   {showDetail?.movie?.age > 0 && (
-  <div className="xl:mt-2 ml-2 xl:ml-0 inline-block">
-    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-center text-white font-bold not-italic">
-      {`T${showDetail?.movie.age}`}
-    </span>
-  </div>
-)}
+                    <span className="inline-flex items-center justify-center w-[38px] h-7 bg-[rgb(245,128,32)] rounded text-sm text-white font-bold ml-2">
+                      T{showDetail?.movie.age}
+                    </span>
+                  )}
                 </div>
 
-                {/*  */}
+                {/* Rạp + suất */}
                 <div className="col-span-2 md:col-span-1 xl:col-span-3">
-                  <div>
-                    <div className="xl:mt-4 text-sm xl:text-base">
-                      <strong>{showDetail?.room.cinema.cinemaName}</strong>
-                      <span> - </span>
-                      <span className="text-sm xl:text-base">{showDetail?.room.roomName}</span>
-                    </div>
-                    <div className="xl:mt-2 text-sm xl:text-base">
-                      <span>Suất: </span>
-                      <strong>
-  {showDetail?.startTime && !isNaN(new Date(showDetail.startTime).getTime()) && (
-  <strong>
-    {new Date(showDetail.startTime).toISOString().substring(11, 16)}
-  </strong>
-)}
-</strong>
-                      <span> - </span>
-                      {showDetail?.releaseDate && (
-  <span className="capitalize text-sm">
-    {new Date(showDetail.releaseDate).toLocaleDateString("vi-VN", {
-      weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      timeZone: "Asia/Ho_Chi_Minh"
-    })}
-  </span>
-)}
-                    </div>
+                  <div className="xl:mt-4 text-sm xl:text-base">
+                    <strong>{showDetail?.room.cinema.cinemaName}</strong>
+                    <span> - </span>
+                    <span>{showDetail?.room.roomName}</span>
                   </div>
-                  <div className="xl:block hidden">
-                    {/* {selectedSeats.length > 0 &&
-  selectedSeats.map((seat) => (
-     <>
-     <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
-    <div key={seat.id} className="flex justify-between text-sm mt-2">
-      <div>
-        <strong>1x </strong>
-        <span>Ghế đơn</span>
-        <div>
-          <span>Ghế: </span>
-          <strong>{seat.id}</strong>
-        </div>
-      </div>
-      <span className="inline-block font-bold">
-        {seat.ticketPrice.toLocaleString()} ₫
-      </span>
-    </div></>
-  ))} */}
-                    <>
-                      <div className="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
-                      <div className="flex justify-between text-sm mt-2">
-                        <div>
-                          <strong>1x </strong>
-                          <span>Ghế đơn</span>
-                          <div>
-                            <span>Ghế: </span>
-                            <strong>H1</strong>
-                          </div>
-                        </div>
-                        <span className="inline-block font-bold">85.000 ₫</span>
-                      </div>
-                    </>
+                  <div className="xl:mt-2 text-sm xl:text-base">
+                    <span>Suất: </span>
+                    <strong>{formatTime(showDetail?.startTime ?? "")}</strong>
+                    <span> - </span>
+                    {showDetail?.releaseDate && (
+                      <span className="capitalize text-sm">
+                        {new Date(showDetail.releaseDate).toLocaleDateString("vi-VN", {
+                          weekday: "long", day: "2-digit", month: "2-digit", year: "numeric",
+                          timeZone: "Asia/Ho_Chi_Minh",
+                        })}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="my-4 border-t border-[rgb(153,153,153)] border-dashed xl:block hidden" />
+                  {/* Danh sách ghế đã chọn */}
+                  <div className="xl:block hidden">
+                    {selectedSeats.length > 0 && (
+                      <>
+                        <div className="my-4 border-t border-dashed border-gray-200" />
+                        {selectedSeats.map((seat) => (
+                          <div key={seat.seatId} className="flex justify-between text-sm mt-2">
+                            <div>
+                              <strong>1x </strong>
+                              <span>{seat.seattype?.seatTypeName ?? "Ghế"}</span>
+                              <div>
+                                <span>Ghế: </span>
+                                <strong>{seat.seatRow}{seat.seatColumn}</strong>
+                              </div>
+                            </div>
+                            <span className="font-bold">
+                              {Number(seat.prices?.[0]?.price ?? 0).toLocaleString("vi-VN")} ₫
+                            </span>
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </div>
+
+                  <div className="my-4 border-t border-dashed border-gray-300 xl:block hidden" />
                 </div>
 
-                {/*  */}
+                {/* Tổng tiền desktop */}
                 <div className="xl:flex hidden justify-between col-span-3">
                   <strong className="text-base">Tổng cộng</strong>
-                  <span className="inline-block font-bold text-primary">
-                    85.000&nbsp;₫
+                  <span className="font-bold text-[rgb(245,128,32)]">
+                    {totalPrice.toLocaleString("vi-VN")}&nbsp;₫
                   </span>
                 </div>
-
-                {/*  */}
               </div>
-              <div className="mt-8 xl:flex hidden">
-                <button className="w-1/2 mr-2 py-2 text-[rgb(245,128,32)]">
-                  <span>Quay lại</span>
-                </button>
-                <button className="w-1/2 ml-2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-20">
-                  <span>Tiếp tục</span>
+
+              {/* Nút desktop */}
+              <div className="mt-8 xl:flex hidden gap-2">
+                <button className="w-1/2 py-2 text-[rgb(245,128,32)]">Quay lại</button>
+                <button
+                  disabled={selectedSeats.length === 0}
+                  className="w-1/2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Tiếp tục
                 </button>
               </div>
             </div>
-            {/* responsive */}
-            <div
-              className="fixed bottom-0 left-0 w-full z-100 bg-white xl:hidden transition-all duration-500 ease-in-out overflow-hidden max-h-[90vh] pb-12 pt-2 border border-[#DFDFDF] rounded-t-xl opacity-100"
-              style={{ height: "auto", minHeight: "auto" }}
-            >
-              <div className="rounded opacity-100 w-full">
-                <img
-                  src="/images/delete.png"
-                  alt="Icon show"
-                  width={45}
-                  height={20}
-                  className="absolute -top-[6%] left-[50%] -translate-x-[50%] brightness-90 grayscale-[20%] z-100"
-                />
-              </div>
-              <div className="grid grid-cols-3 items-center px-4 mb-2 transition relative overflow-hidden  opacity-100">
-                <div className="col-span-3">
-                  <div>
-                    <div className="flex justify-between text-sm mt-2">
+
+            {/* Thanh bottom mobile */}
+            <div className="fixed bottom-0 left-0 w-full z-50 bg-white xl:hidden border border-[#DFDFDF] rounded-t-xl pb-12 pt-2">
+              <div className="px-4 mb-2">
+                {selectedSeats.length > 0 ? (
+                  selectedSeats.map((seat) => (
+                    <div key={seat.seatId} className="flex justify-between text-sm mt-2">
                       <div>
                         <strong>1x </strong>
-                        <span>Ghế đơn</span>
+                        <span>{seat.seattype?.seatTypeName ?? "Ghế"}</span>
                         <div>
                           <span>Ghế: </span>
-                          <strong>G10</strong>
+                          <strong>{seat.seatRow}{seat.seatColumn}</strong>
                         </div>
                       </div>
-                      <span className="inline-block font-bold">159.000 ₫</span>
+                      <span className="font-bold">
+                        {Number(seat.prices?.[0]?.price ?? 0).toLocaleString("vi-VN")} ₫
+                      </span>
                     </div>
-                  </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-400 text-center py-2">Chưa chọn ghế</p>
+                )}
+              </div>
+
+              {/* Fixed bottom bar */}
+              <div className="fixed bottom-0 left-0 right-0 h-14 bg-white flex items-center justify-between px-4 border-t border-gray-100">
+                <div className="flex items-center gap-1">
+                  <span className="text-sm text-gray-500">Tổng cộng:</span>
+                  <span className="font-bold text-[rgb(245,128,32)]">
+                    {totalPrice.toLocaleString("vi-VN")} ₫
+                  </span>
                 </div>
-                {/*
-                 */}
-                <div className="fixed bottom-0">
-                  <div className="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
-                    <strong className="text-sm font-normal text-[rgb(85,85,85)]">
-                      Tổng cộng:
-                    </strong>
-                    <span className="inline-block font-bold text-[rgb(245,128,32)]">
-                      159.000 ₫
-                    </span>
-                  </div>
-                  <div className="text-right fixed bottom-0 right-4 h-14 flex items-center">
-                    <div>
-                      <button className="w-[65px] h-10 py-2 bg-transparent text-[rgb(245,128,32)] text-sm rounded-md">
-                        <span>Quay lại</span>
-                      </button>
-                      <button className="w-[80px] h-10 py-2 bg-[rgb(245,128,32)] text-white border text-sm rounded-md hover:bg-orange-20 ">
-                        <span>Tiếp tục</span>
-                      </button>
-                    </div>
-                  </div>
+                <div className="flex gap-2">
+                  <button className="px-4 h-10 text-[rgb(245,128,32)] text-sm">Quay lại</button>
+                  <button
+                    disabled={selectedSeats.length === 0}
+                    className="px-4 h-10 bg-[rgb(245,128,32)] text-white text-sm rounded-md disabled:opacity-40"
+                  >
+                    Tiếp tục
+                  </button>
                 </div>
-                {/*  */}
               </div>
             </div>
           </div>
