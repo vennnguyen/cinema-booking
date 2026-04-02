@@ -5,14 +5,13 @@ import { toast } from "sonner";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const useBookingStore = create<BookingState>((set, get) => ({
-  // State
   showDetail: null,
   selectedSeats: [],
   selectedCombos: [],
   loading: false,
   error: null,
 
-  // Lấy thông tin suất chiếu + ghế
+  // Lấy thông tin suất chiếu
   fetchShowDetail: async (showId: number) => {
     set({ loading: true, error: null });
     try {

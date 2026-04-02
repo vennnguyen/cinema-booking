@@ -1,20 +1,10 @@
 import React, { useEffect, useMemo } from "react";
 import useSeatStore from "../../stores/seat";
+import { formatTime, groupSeatsByRow } from "../../utils/utils";
 
 type Props = {
   startTime: string;
   roomId: number;
-};
-
-const formatTime = (timeStr: string) => {
-  if (!timeStr) return "";
-  if (timeStr.includes(":") && timeStr.length <= 8) return timeStr.slice(0, 5);
-  return new Date(timeStr).toLocaleTimeString("vi-VN", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "UTC",
-  });
 };
 
 const ChoiceSeat = ({ startTime, roomId }: Props) => {
@@ -24,21 +14,13 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
     fetchSeats(roomId);
   }, [roomId]);
 
-  const grouped = useMemo(() => {
-    return seats.reduce((acc, s) => {
-      if (!acc[s.seatRow]) acc[s.seatRow] = [];
-      acc[s.seatRow].push(s);
-      return acc;
-    }, {} as Record<string, typeof seats>);
-  }, [seats]);
+  const grouped = useMemo(() => groupSeatsByRow(seats), [seats]);
 
   const selectedIds = new Set(selectedSeats.map((s) => s.seatId));
 
   const toggle = (seatIds: number[]) => {
-    seatIds.forEach((id) => {
-      const seat = seats.find((s) => s.seatId === id);
-      if (seat) toggleSeat(seat);
-    });
+    const firstSeat = seats.find((s) => s.seatId === seatIds[0]);
+    if (firstSeat) toggleSeat(firstSeat, seats);
   };
 
   return (
@@ -67,18 +49,24 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([row, rowSeats]) => {
               const isCouple = rowSeats[0].seatTypeId === 3;
-              const sorted = [...rowSeats].sort((a, b) => a.seatColumn - b.seatColumn);
+              const sorted = [...rowSeats].sort(
+                (a, b) => a.seatColumn - b.seatColumn,
+              );
               const mid = Math.floor(sorted.length / 2);
 
               return (
                 <div key={row} className="flex items-center gap-1">
-                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">{row}</span>
+                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">
+                    {row}
+                  </span>
                   <div className="flex gap-1 items-center">
                     {sorted.map((seat, i) => {
                       if (isCouple && i % 2 !== 0) return null;
                       const next = isCouple ? sorted[i + 1] : null;
                       const ids = isCouple
-                        ? ([seat.seatId, next?.seatId].filter(Boolean) as number[])
+                        ? ([seat.seatId, next?.seatId].filter(
+                            Boolean,
+                          ) as number[])
                         : [seat.seatId];
                       const isBooked = !seat.status;
                       const isSelected = selectedIds.has(seat.seatId);
@@ -86,16 +74,16 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
                       const seatClass = isBooked
                         ? "bg-gray-100 border-gray-200 text-gray-300 cursor-not-allowed"
                         : isSelected
-                        ? seat.seatTypeId === 2
-                          ? "bg-[#BA7517] border-[#854F0B] text-[#FAEEDA] scale-110"
-                          : seat.seatTypeId === 3
-                          ? "bg-[#D4537E] border-[#993556] text-[#FBEAF0] scale-105"
-                          : "bg-[#034ea2] border-[#023a7a] text-white scale-110"
-                        : seat.seatTypeId === 2
-                        ? "bg-[#FAEEDA] border-[#EF9F27] text-[#854F0B] hover:bg-[#FAC775]"
-                        : seat.seatTypeId === 3
-                        ? "bg-[#FBEAF0] border-[#ED93B1] text-[#72243E] hover:bg-[#F4C0D1]"
-                        : "bg-white border-gray-300 text-gray-600 hover:border-[#034ea2] hover:text-[#034ea2]";
+                          ? seat.seatTypeId === 2
+                            ? "bg-[#BA7517] border-[#854F0B] text-[#FAEEDA] scale-110"
+                            : seat.seatTypeId === 3
+                              ? "bg-[#D4537E] border-[#993556] text-[#FBEAF0] scale-105"
+                              : "bg-[#034ea2] border-[#023a7a] text-white scale-110"
+                          : seat.seatTypeId === 2
+                            ? "bg-[#FAEEDA] border-[#EF9F27] text-[#854F0B] hover:bg-[#FAC775]"
+                            : seat.seatTypeId === 3
+                              ? "bg-[#FBEAF0] border-[#ED93B1] text-[#72243E] hover:bg-[#F4C0D1]"
+                              : "bg-white border-gray-300 text-gray-600 hover:border-[#034ea2] hover:text-[#034ea2]";
 
                       return (
                         <React.Fragment key={seat.seatId}>
@@ -107,14 +95,16 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
                             className={`h-7 rounded-t-md rounded-b-sm border-[1.5px] text-[10px] font-medium transition-all duration-150 flex-shrink-0 ${isCouple ? "w-16" : "w-7"} ${seatClass}`}
                           >
                             {isCouple
-    ? `${seat.seatRow}${seat.seatColumn}·${next?.seatRow ?? ""}${next?.seatColumn ?? ""}`
-    : `${seat.seatRow}${seat.seatColumn}`}
+                              ? `${seat.seatRow}${seat.seatColumn}·${next?.seatRow ?? ""}${next?.seatColumn ?? ""}`
+                              : `${seat.seatRow}${seat.seatColumn}`}
                           </button>
                         </React.Fragment>
                       );
                     })}
                   </div>
-                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">{row}</span>
+                  <span className="w-4 text-[11px] text-gray-400 text-center flex-shrink-0">
+                    {row}
+                  </span>
                 </div>
               );
             })}
