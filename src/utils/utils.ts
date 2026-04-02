@@ -1,17 +1,22 @@
+import type { SelectedCombo } from "../types/combo";
 import type { Seat } from "../types/seat";
+import type { Showtime } from "../types/showtime";
 
-export const calculateTotalPrice = (selectedSeats: Seat[]) => {
-  console.log(
-    "calculating:",
-    selectedSeats.map((s) => ({ seatId: s.seatId, isPrimary: s.isPrimary })),
+// utils/utils.ts
+export const calculateTotalPrice = (
+  selectedSeats: Seat[],
+  selectedCombos: SelectedCombo[] = [],
+) => {
+  const seatTotal = selectedSeats
+    .filter((s) => s.isPrimary !== false)
+    .reduce((sum, s) => sum + Number(s.prices?.[0]?.price ?? 0), 0);
+
+  const comboTotal = selectedCombos.reduce(
+    (sum, c) => sum + Number(c.price) * c.quantity,
+    0,
   );
 
-  return selectedSeats
-    .filter((s) => s.isPrimary !== false)
-    .reduce((sum, s) => {
-      const price = s.prices?.[0]?.price ?? 0;
-      return sum + Number(price);
-    }, 0);
+  return seatTotal + comboTotal;
 };
 export const formatTime = (timeStr: string) => {
   if (!timeStr) return "";
@@ -96,5 +101,41 @@ export const groupSeatsByRow = (seats: Seat[]): Record<string, Seat[]> => {
       return acc;
     },
     {} as Record<string, Seat[]>,
+  );
+};
+
+export const filterShowtimesByDate = (
+  showtimes: Showtime[],
+  selectedDate: string | null,
+): Showtime[] => {
+  if (!selectedDate) return showtimes;
+  return showtimes.filter((show) => {
+    const showDate = new Date(show.releaseDate).toISOString().slice(0, 10);
+    return showDate === selectedDate;
+  });
+};
+
+export const groupShowtimesByCinema = (
+  showtimes: Showtime[],
+): Record<string, Record<string, Showtime[]>> => {
+  return showtimes.reduce(
+    (acc, show) => {
+      const cinemaName = show.room.cinema.cinemaName;
+      const roomType = show.room.roomtype.roomTypeName;
+
+      if (!acc[cinemaName]) acc[cinemaName] = {};
+      if (!acc[cinemaName][roomType]) acc[cinemaName][roomType] = [];
+      // Kiểm tra trùng giờ trước khi push
+      const isDuplicate = acc[cinemaName][roomType].some(
+        (s) => s.startTime === show.startTime,
+      );
+
+      if (!isDuplicate) {
+        acc[cinemaName][roomType].push(show);
+      }
+
+      return acc;
+    },
+    {} as Record<string, Record<string, Showtime[]>>,
   );
 };

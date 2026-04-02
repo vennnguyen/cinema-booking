@@ -27,38 +27,31 @@ const useBookingStore = create<BookingState>((set, get) => ({
       throw error;
     }
   },
+  // combo
+  toggleCombo: (combo, delta) => {
+    const { selectedCombos } = get();
+    const exists = selectedCombos.find((c) => c.comboId === combo.comboId);
 
-  // Chọn / bỏ chọn ghế
-  //   toggleSeat: (seat) => {
-  //     const { selectedSeats } = get();
-  //     const exists = selectedSeats.find((s) => s.seatId === seat.seatId);
-  //     if (exists) {
-  //       set({ selectedSeats: selectedSeats.filter((s) => s.seatId !== seat.seatId) });
-  //     } else {
-  //       set({ selectedSeats: [...selectedSeats, seat] });
-  //     }
-  //   },
+    if (!exists && delta > 0) {
+      set({ selectedCombos: [...selectedCombos, { ...combo, quantity: 1 }] });
+    } else if (exists) {
+      const newQty = exists.quantity + delta;
+      if (newQty <= 0) {
+        set({
+          selectedCombos: selectedCombos.filter(
+            (c) => c.comboId !== combo.comboId,
+          ),
+        });
+      } else {
+        set({
+          selectedCombos: selectedCombos.map((c) =>
+            c.comboId === combo.comboId ? { ...c, quantity: newQty } : c,
+          ),
+        });
+      }
+    }
+  },
 
-  //   // Thêm / bớt combo
-  //   toggleCombo: (combo) => {
-  //     const { selectedCombos } = get();
-  //     const exists = selectedCombos.find((c) => c.comboId === combo.comboId);
-  //     if (exists) {
-  //       set({ selectedCombos: selectedCombos.filter((c) => c.comboId !== combo.comboId) });
-  //     } else {
-  //       set({ selectedCombos: [...selectedCombos, combo] });
-  //     }
-  //   },
-
-  //   // Tính tổng tiền
-  //   getTotalPrice: () => {
-  //     const { selectedSeats, selectedCombos } = get();
-  //     const seatTotal = selectedSeats.reduce((sum, s) => sum + (s.price ?? 0), 0);
-  //     const comboTotal = selectedCombos.reduce((sum, c) => sum + (c.price ?? 0), 0);
-  //     return seatTotal + comboTotal;
-  //   },
-
-  // Reset khi rời trang
   resetBooking: () => {
     set({
       showDetail: null,

@@ -19,7 +19,7 @@ export interface Seat {
   status: boolean;
   seattype: SeatType;
   prices: Price[];
-  isPrimary?: boolean;
+  isPrimary?: boolean; //dùng để không tính tiền 2 lần ghế đôi
 }
 export interface SeatResponse {
   data: Seat[];

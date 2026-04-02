@@ -67,7 +67,7 @@ const useSeatStore = create<SeatState>((set, get) => ({
         set({ selectedSeats: [...selectedSeats, ...seatsToAdd] });
       }
     } else {
-      // Ghế thường: logic cũ
+      // Ghế thường
       const exists = selectedSeats.some((s) => s.seatId === seat.seatId);
       if (exists) {
         set({

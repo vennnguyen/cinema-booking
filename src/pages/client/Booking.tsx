@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 import ChoiceSeat from "../../components/ui/ChoiceSeat";
@@ -10,11 +10,21 @@ import {
   formatTime,
   groupSelectedSeats,
 } from "../../utils/utils";
-
+import ChoiceFood from "../../components/ui/ChoiceFood";
+import Pay from "../../components/ui/Pay";
+const STEPS = [
+  "Chọn phim / Rạp / Suất",
+  "Chọn ghế",
+  "Chọn thức ăn",
+  "Thanh toán",
+  "Xác nhận",
+];
 const Booking = () => {
   const { state } = useLocation();
-  const { showDetail, fetchShowDetail, resetBooking } = useBookingStore();
+  const { showDetail, fetchShowDetail, resetBooking, selectedCombos } =
+    useBookingStore();
   const { selectedSeats, resetSeats } = useSeatStore();
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {
     fetchShowDetail(state.showId);
@@ -28,7 +38,13 @@ const Booking = () => {
     () => groupSelectedSeats(selectedSeats),
     [selectedSeats],
   );
+  const handleNext = () => {
+    if (step < 3) setStep((s) => (s + 1) as 1 | 2 | 3);
+  };
 
+  const handleBack = () => {
+    if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+  };
   return (
     <div>
       <Header />
@@ -41,28 +57,22 @@ const Booking = () => {
         {/* Progress bar */}
         <div className="booking__progress-bar flex justify-center items-center flex-nowrap bg-white relative md:mb-8 mb-0 w-full overflow-auto">
           <ul className="flex justify-center items-center text-grey-20 md:text-base text-[12px] font-semibold w-full flex-nowrap">
-            {[
-              "Chọn phim / Rạp / Suất",
-              "Chọn ghế",
-              "Chọn thức ăn",
-              "Thanh toán",
-              "Xác nhận",
-            ].map((step, i) => (
+            {STEPS.map((label, i) => (
               <li
-                key={step}
+                key={label}
                 className="pt-4 mb-4 pl-0"
                 style={{
                   color:
-                    i === 1
+                    i === step || i < step
                       ? "rgb(3,78,162)"
                       : i === 0
                         ? "rgb(88,142,202)"
                         : "#d3d0d0",
                 }}
               >
-                <button className="md:mx-3 mx-1">{step}</button>
+                <button className="md:mx-3 mx-1">{label}</button>
                 <div
-                  className={`relative mt-4 h-0.5 before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef] ${i <= 1 ? "after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]" : ""}`}
+                  className={`relative mt-4 h-0.5 before:content-[''] before:absolute before:left-0 before:w-full before:h-0.75 before:bg-[#e9ecef] ${i <= step ? "after:content-[''] after:absolute after:left-0 after:w-full after:h-0.75 after:bg-[#034ea2]" : ""}`}
                 />
               </li>
             ))}
@@ -72,12 +82,14 @@ const Booking = () => {
         <div className="md:container md:mx-auto xl:max-w-[1390px] lg:max-w-4xl md:max-w-4xl md:px-0 sm:px-[45px] grid xl:grid-cols-3 grid-cols-1">
           {/* Bên trái — sơ đồ ghế */}
           <div className="col-span-2 xl:order-first order-last xl:h-full h-full overflow-hidden xl:overflow-auto xl:pb-10 md:pb-32 pb-10">
-            {showDetail && (
+            {step === 1 && showDetail && (
               <ChoiceSeat
                 startTime={showDetail.startTime}
                 roomId={showDetail.room.roomId}
               />
             )}
+            {step === 2 && <ChoiceFood />}
+            {step === 3 && <Pay />}
           </div>
 
           {/* Bên phải — tóm tắt */}
@@ -174,6 +186,28 @@ const Booking = () => {
                         ))}
                       </>
                     )}
+                    {selectedCombos.length > 0 && (
+                      <>
+                        <div className="my-4 border-t border-dashed border-gray-200" />
+                        {selectedCombos.map((combo) => (
+                          <div
+                            key={combo.comboId}
+                            className="flex justify-between text-sm mt-2"
+                          >
+                            <div>
+                              <strong>{combo.quantity}x </strong>
+                              <span>{combo.comboName}</span>
+                            </div>
+                            <span className="font-bold">
+                              {(
+                                Number(combo.price) * combo.quantity
+                              ).toLocaleString("vi-VN")}{" "}
+                              ₫
+                            </span>
+                          </div>
+                        ))}
+                      </>
+                    )}
                   </div>
                   {/*  */}
                   <div className="my-4 border-t border-dashed border-gray-300 xl:block hidden" />
@@ -183,7 +217,10 @@ const Booking = () => {
                 <div className="xl:flex hidden justify-between col-span-3">
                   <strong className="text-base">Tổng cộng</strong>
                   <span className="font-bold text-[rgb(245,128,32)]">
-                    {calculateTotalPrice(selectedSeats).toLocaleString("vi-VN")}
+                    {calculateTotalPrice(
+                      selectedSeats,
+                      selectedCombos,
+                    ).toLocaleString("vi-VN")}
                     &nbsp;₫
                   </span>
                 </div>
@@ -191,14 +228,19 @@ const Booking = () => {
 
               {/* Nút desktop */}
               <div className="mt-8 xl:flex hidden gap-2">
-                <button className="w-1/2 py-2 text-[rgb(245,128,32)]">
+                <button
+                  className="w-1/2 py-2 text-[rgb(245,128,32)]"
+                  onClick={handleBack}
+                  disabled={step === 1}
+                >
                   Quay lại
                 </button>
                 <button
                   disabled={selectedSeats.length === 0}
+                  onClick={handleNext}
                   className="w-1/2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Tiếp tục
+                  {step === 3 ? "Xác nhận" : "Tiếp tục"}
                 </button>
               </div>
             </div>
@@ -230,6 +272,28 @@ const Booking = () => {
                     Chưa chọn ghế
                   </p>
                 )}
+                {selectedCombos.length > 0 && (
+                  <>
+                    <div className="my-4 border-t border-dashed border-gray-200" />
+                    {selectedCombos.map((combo) => (
+                      <div
+                        key={combo.comboId}
+                        className="flex justify-between text-sm mt-2"
+                      >
+                        <div>
+                          <strong>{combo.quantity}x </strong>
+                          <span>{combo.comboName}</span>
+                        </div>
+                        <span className="font-bold">
+                          {(
+                            Number(combo.price) * combo.quantity
+                          ).toLocaleString("vi-VN")}{" "}
+                          ₫
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
 
               {/* Fixed bottom bar */}
@@ -237,19 +301,27 @@ const Booking = () => {
                 <div className="flex items-center gap-1">
                   <span className="text-sm text-gray-500">Tổng cộng:</span>
                   <span className="font-bold text-[rgb(245,128,32)]">
-                    {calculateTotalPrice(selectedSeats).toLocaleString("vi-VN")}{" "}
+                    {calculateTotalPrice(
+                      selectedSeats,
+                      selectedCombos,
+                    ).toLocaleString("vi-VN")}{" "}
                     ₫
                   </span>
                 </div>
                 <div className="flex gap-2">
-                  <button className="px-4 h-10 text-[rgb(245,128,32)] text-sm">
+                  <button
+                    className="px-4 h-10 text-[rgb(245,128,32)] text-sm"
+                    onClick={handleBack}
+                    disabled={step === 1}
+                  >
                     Quay lại
                   </button>
                   <button
                     disabled={selectedSeats.length === 0}
+                    onClick={handleNext}
                     className="px-4 h-10 bg-[rgb(245,128,32)] text-white text-sm rounded-md disabled:opacity-40"
                   >
-                    Tiếp tục
+                    {step === 3 ? "Xác nhận" : "Tiếp tục"}
                   </button>
                 </div>
               </div>

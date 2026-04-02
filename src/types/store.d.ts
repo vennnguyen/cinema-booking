@@ -1,5 +1,6 @@
 import type { Movie } from "../types/product";
 import type { ShowDetail, ShowTimeSeat } from "./booking";
+import type { comboFood } from "./combo";
 import type { Showtime } from "./showtime";
 interface MovieState {
   movies: Movie[];
@@ -28,7 +29,7 @@ export interface BookingState {
 
   fetchShowDetail: (showId: number) => Promise<void>;
   // toggleSeat: (seat: ShowTimeSeat["seat"] & { price?: number }) => void;
-  // toggleCombo: (combo: Combo) => void;
+  toggleCombo: (combo: Combo, delta: number) => void;
   // getTotalPrice: () => number;
   resetBooking: () => void;
 }
@@ -41,4 +42,12 @@ interface SeatState {
   fetchSeats: (showId: number) => Promise<void>;
   toggleSeat: (seat: Seat, allSeats: Seat[]) => void;
   resetSeats: () => void;
+}
+
+interface FoodState {
+  combo: comboFood[];
+  comboSelected: comboFood[] | null;
+  loading: boolean;
+  error: string | null;
+  fetchFoods: () => Promise<void>;
 }

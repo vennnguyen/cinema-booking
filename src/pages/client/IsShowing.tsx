@@ -121,76 +121,79 @@ const IsShowing = () => {
 
             <div className="leading-5 content__data__full">
               <div className="text-sm">
-                <p className="text-[#4a4a4a]" style={{marginBottom: 11}}>
-  <span style={{fontSize: 14}}>
-    <span style={{fontFamily: 'Arial,Helvetica,sans-serif'}}>
-      <span style={{lineHeight: '107%'}}>
-        <span style={{background: 'white'}}>
-          <span style={{letterSpacing: '.15pt'}}>
-            Sau kì nghỉ tết dài, mọi người lại tiếp tục lao vào
-            vòng quay của công việc. Để xóa tan đi bầu không khí
-            "u ám" dịp đi làm của năm mới,
-            <strong> Galaxy Cinema</strong> chiêu đãi các Stars
-            mấy tác phẩm có thể coi là xịn xò nè. Cùng tìm hiểu
-            nha.
-          </span>
-        </span>
-      </span>
-    </span>
-  </span>
-</p>
+                <p className="text-[#4a4a4a]" style={{ marginBottom: 11 }}>
+                  <span style={{ fontSize: 14 }}>
+                    <span style={{ fontFamily: "Arial,Helvetica,sans-serif" }}>
+                      <span style={{ lineHeight: "107%" }}>
+                        <span style={{ background: "white" }}>
+                          <span style={{ letterSpacing: ".15pt" }}>
+                            Sau kì nghỉ tết dài, mọi người lại tiếp tục lao vào
+                            vòng quay của công việc. Để xóa tan đi bầu không khí
+                            "u ám" dịp đi làm của năm mới,
+                            <strong> Galaxy Cinema</strong> chiêu đãi các Stars
+                            mấy tác phẩm có thể coi là xịn xò nè. Cùng tìm hiểu
+                            nha.
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </p>
                 {movies.slice(0, 5).map((movie, index) => {
-  return (
-    <div key={index}>
-      <p style={{ marginBottom: "11px" }}>
-        <a href="">
-          <strong>
-            <span className="text-[#485fc7]"
-              style={{
-                fontSize: "14px",
-                
-                lineHeight: "107%",
-                background: "white",
-                letterSpacing: ".15pt",
-              }}
-            >
-              {`${index + 1}. ${movie.movieName} - ${movie.movietype?.movieTypeName}`}
-            </span>
-          </strong>
-        </a>
-      </p>
+                  return (
+                    <div key={index}>
+                      <p style={{ marginBottom: "11px" }}>
+                        <a href="">
+                          <strong>
+                            <span
+                              className="text-[#485fc7]"
+                              style={{
+                                fontSize: "14px",
+                                lineHeight: "107%",
+                                background: "white",
+                                letterSpacing: ".15pt",
+                              }}
+                            >
+                              {`${index + 1}. ${movie.movieName} - ${movie.movietype?.movieTypeName}`}
+                            </span>
+                          </strong>
+                        </a>
+                      </p>
 
-      <p style={{ marginBottom: "11px" }} className="text-[#4a4a4a]">
-        <a href="" className="text-[#485fc7]">
-          <strong>
-            <span
-              style={{
-                fontSize: "14px",
-                lineHeight: "107%",
-                background: "white",
-                letterSpacing: ".15pt",
-              }}
-            >
-              {movie.movieName}
-            </span>
-          </strong>
-        </a>{" "}
-        <span className="text-[#4a4a4a]"
-          style={{
-            fontSize: "14px",
-            fontFamily: "Arial,Helvetica,sans-serif",
-            lineHeight: "107%",
-            background: "white",
-            letterSpacing: ".15pt",
-          }}
-        >
-          {movie.description || "Chưa có mô tả"}
-        </span>
-      </p>
-    </div>
-  );
-})}
-
+                      <p
+                        style={{ marginBottom: "11px" }}
+                        className="text-[#4a4a4a]"
+                      >
+                        <a href="" className="text-[#485fc7]">
+                          <strong>
+                            <span
+                              style={{
+                                fontSize: "14px",
+                                lineHeight: "107%",
+                                background: "white",
+                                letterSpacing: ".15pt",
+                              }}
+                            >
+                              {movie.movieName}
+                            </span>
+                          </strong>
+                        </a>{" "}
+                        <span
+                          className="text-[#4a4a4a]"
+                          style={{
+                            fontSize: "14px",
+                            fontFamily: "Arial,Helvetica,sans-serif",
+                            lineHeight: "107%",
+                            background: "white",
+                            letterSpacing: ".15pt",
+                          }}
+                        >
+                          {movie.description || "Chưa có mô tả"}
+                        </span>
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
