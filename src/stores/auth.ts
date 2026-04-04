@@ -99,9 +99,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (!user) {
         await fetchMe();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
       get().clearState();
     } finally {
       set({ loading: false });

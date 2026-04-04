@@ -12,6 +12,7 @@ import {
 } from "../../utils/utils";
 import ChoiceFood from "../../components/ui/ChoiceFood";
 import Pay from "../../components/ui/Pay";
+
 const STEPS = [
   "Chọn phim / Rạp / Suất",
   "Chọn ghế",
@@ -21,6 +22,7 @@ const STEPS = [
 ];
 const Booking = () => {
   const { state } = useLocation();
+  
   const { showDetail, fetchShowDetail, resetBooking, selectedCombos } =
     useBookingStore();
   const { selectedSeats, resetSeats } = useSeatStore();

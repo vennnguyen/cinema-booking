@@ -6,8 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"; //giúp kết nối zod v
 import Close from "../components/icon/close";
 import EyeFlash from "../components/icon/eyeFlash";
 import { useAuthStore } from "../stores/auth";
-import { useNavigate } from "react-router-dom";
-// import { useAuthStore } from "@/stores/useAuthStore";
+
 
 interface SigninProps {
   open: boolean;
@@ -22,7 +21,6 @@ type SignInFormValues = z.infer<typeof signInSchema>;
 const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
   const {signIn} = useAuthStore()
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -36,16 +34,13 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
   const onSubmit = async (data: SignInFormValues) => {
     const { email, password } = data;
      await signIn(email,password)
-    console.log(email, password);
+    
     reset();
     setOpen(false);
-        setTimeout(() => {
-      navigate(0);
-    }, 1000); //load lại trang
   };
   return (
     <div
-      className={`fixed inset-0 z-999 grid h-screen w-screen place-items-center bg-black/60 backdrop-blur-sm transition-opacity duration-300
+      className={`fixed inset-0 z-999 grid h-screen w-screen place-items-center bg-black/30 transition-opacity duration-300
       ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
     >
       <div className="relative max-w-100 min-w-50 rounded-sm px-6 py-10 m-0 bg-white shadow-sm">

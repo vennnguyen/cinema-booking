@@ -4,7 +4,7 @@ import BookTicket from "./pages/client/BookTicket";
 import Booking from "./pages/client/Booking";
 import IsShowing from "./pages/client/IsShowing";
 import { Toaster } from "sonner";
-import ProtectedRoute from "./layouts/protectedRoute";
+
 import AuthInitializer from "./layouts/AuthInitializer";
 
 function App() {
@@ -16,9 +16,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/xuat-chieu/:slug" element={<BookTicket />} />
-            <Route element={<ProtectedRoute />}>
+            {/* <Route element={<ProtectedRoute />}>
               <Route path="/dat-ve/:slug" element={<Booking />} />
-            </Route>
+            </Route> */}
+            <Route path="/dat-ve/:slug" element={<Booking />} />
             <Route path="/phim-dang-chieu" element={<IsShowing />} />
           </Routes>
         </AuthInitializer>

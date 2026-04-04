@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 import Clock from "../../components/icon/clock";
@@ -16,12 +16,16 @@ import {
   formatTime,
   groupShowtimesByCinema,
 } from "../../utils/utils";
+import { useAuthStore } from "../../stores/auth";
+import Signin from "../../layouts/signin";
 
 
 const BookTicket = () => {
   
-  
+  const user = useAuthStore(s=>s.user)
   const { slug } = useParams();
+const [openSignIn, setOpenSignIn] = useState(false);
+
   const { fetchMovieBySlug, selectedMovie, fetchMovies, movies } =
     useMovieStore();
   const { fetchShowtimeByMovie, showtimes, selectedDate } = useShowtimeStore();
@@ -338,13 +342,19 @@ const BookTicket = () => {
                               {roomType} Phụ Đề
                             </label>
                             <div className="time__show flex flex-1 flex-row gap-x-3 gap-y-1 flex-wrap">
+                               <Signin open={openSignIn} setOpen={setOpenSignIn} />
                               {shows
                                 .sort((a, b) =>
                                   a.startTime.localeCompare(b.startTime),
                                 )
                                 .map((show) => (
                                   <Link
-                                 
+                                    onClick={(e)=>{
+                                      if(!user) {
+                                           e.preventDefault();
+            setOpenSignIn(true); 
+                                      }
+                                    }}
                                     state={show}
                                     to={`/dat-ve/${slug}`}
                                     // key={show.showId}
