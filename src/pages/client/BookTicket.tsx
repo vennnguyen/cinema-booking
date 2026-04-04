@@ -17,7 +17,10 @@ import {
   groupShowtimesByCinema,
 } from "../../utils/utils";
 
+
 const BookTicket = () => {
+  
+  
   const { slug } = useParams();
   const { fetchMovieBySlug, selectedMovie, fetchMovies, movies } =
     useMovieStore();
@@ -341,6 +344,7 @@ const BookTicket = () => {
                                 )
                                 .map((show) => (
                                   <Link
+                                 
                                     state={show}
                                     to={`/dat-ve/${slug}`}
                                     // key={show.showId}

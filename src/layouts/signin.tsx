@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form"; // quản lí trạng thái và sự 
 import { zodResolver } from "@hookform/resolvers/zod"; //giúp kết nối zod với hookform
 import Close from "../components/icon/close";
 import EyeFlash from "../components/icon/eyeFlash";
-// import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../stores/auth";
+import { useNavigate } from "react-router-dom";
 // import { useAuthStore } from "@/stores/useAuthStore";
 
 interface SigninProps {
@@ -20,7 +21,8 @@ type SignInFormValues = z.infer<typeof signInSchema>;
 
 const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
-  // const navigate = useNavigate();
+  const {signIn} = useAuthStore()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -33,13 +35,13 @@ const Signin: React.FC<SigninProps> = ({ open, setOpen }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = async (data: SignInFormValues) => {
     const { email, password } = data;
-    //  await signIn(email,password)
+     await signIn(email,password)
     console.log(email, password);
     reset();
     setOpen(false);
-    //     setTimeout(() => {
-    //   navigate(0);
-    // }, 1000); load lại trang
+        setTimeout(() => {
+      navigate(0);
+    }, 1000); //load lại trang
   };
   return (
     <div

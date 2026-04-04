@@ -3,26 +3,25 @@ import Home from "./pages/client/Home";
 import BookTicket from "./pages/client/BookTicket";
 import Booking from "./pages/client/Booking";
 import IsShowing from "./pages/client/IsShowing";
-
+import { Toaster } from "sonner";
+import ProtectedRoute from "./layouts/protectedRoute";
+import AuthInitializer from "./layouts/AuthInitializer";
 
 function App() {
-  
   return (
     <>
-     
+      <Toaster position="top-right" richColors />
       <BrowserRouter>
-        <Routes>
-          {/* public route */}
-          <Route path="/" element={<Home />} />
-          <Route path="/xuat-chieu/:slug" element={<BookTicket />} />
-          <Route path="/dat-ve/:slug" element={<Booking />} />
-          <Route path="/phim-dang-chieu" element={<IsShowing />} />
-          {/* protected route */}
-          {/* <Route element={<ProtectedRoute />}>
-            <Route path="/account" element={<AccountPage/>}/>
-            <Route path="/admin" element={<Dashboard />} />
-          </Route> */}
-        </Routes>
+        <AuthInitializer> 
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/xuat-chieu/:slug" element={<BookTicket />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dat-ve/:slug" element={<Booking />} />
+            </Route>
+            <Route path="/phim-dang-chieu" element={<IsShowing />} />
+          </Routes>
+        </AuthInitializer>
       </BrowserRouter>
     </>
   );

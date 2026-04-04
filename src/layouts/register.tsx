@@ -8,8 +8,8 @@ import EyeFlash from "../components/icon/eyeFlash";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-// import { useNavigate } from "react-router-dom";
-// import { useAuthStore } from "@/stores/useAuthStore";
+import { useAuthStore } from "../stores/auth"
+
 
 interface RegisterProps {
   open: boolean;
@@ -25,7 +25,7 @@ const RegisterSchema = z
       .pipe(z.email("Email không hợp lệ")),
     password: z.string().min(6, "Mật khẩu phải có ít nhất 6 kí tự"),
     confirmPassword: z.string(),
-    date: z
+    birthDay: z
       .date()
       .nullable()
       .refine((date) => date !== undefined, {
@@ -41,6 +41,7 @@ type RegisterFormValues = z.infer<typeof RegisterSchema>;
 const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {signUp} = useAuthStore()
   // const navigate = useNavigate();
   const {
     control,
@@ -51,20 +52,17 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(RegisterSchema), // để kết nối useForm với zod đã định nghĩa
     defaultValues: {
-      date: null,
+      birthDay: null,
     },
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = async (data: RegisterFormValues) => {
-    const { email, password } = data;
-    //  await signIn(email,password)
-    console.log(email, password);
+    const { email, password, phone, birthDay, fullName } = data;
+    const dateOfBirth = birthDay ? birthDay.toISOString().split("T")[0] : "";
+    await signUp(fullName, password, email, phone, dateOfBirth);
     reset();
-    setOpen(false);
-    //     setTimeout(() => {
-    //   navigate(0);
-    // }, 1000); load lại trang
+    setOpen(false);  
   };
   return (
     <div
@@ -140,7 +138,7 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
               {/* DatePicker */}
               <span className="w-full mb-1 relative h-auto border  border-gray-200 rounded-sm inline-flex items-center min-w-0 text-sm bg-white transition-all duration-300">
                 <Controller
-                  name="date"
+                  name="birthDay"
                   control={control}
                   render={({ field }) => (
                     <DatePicker
@@ -153,8 +151,8 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
                 />
               </span>
 
-              {errors.date && (
-                <p className="text-red-400 text-sm">{errors.date.message}</p>
+              {errors.birthDay && (
+                <p className="text-red-400 text-sm">{errors.birthDay.message}</p>
               )}
               {/*  */}
               {/* password */}
@@ -192,7 +190,7 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Nhập lại Mật khẩu"
                   className="w-full h-9 px-2 text-sm bg-transparent outline-none border-none"
-                  {...register("password")}
+                  {...register("confirmPassword")}
                 />
 
                 <button
@@ -203,9 +201,9 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
                   {showConfirmPassword ? <Eye /> : <EyeFlash />}
                 </button>
               </span>
-              {errors.password && (
+              {errors.confirmPassword  && (
                 <p className="text-red-400 text-sm">
-                  {errors.password.message}
+                  {errors.confirmPassword .message}
                 </p>
               )}
               {/*  */}

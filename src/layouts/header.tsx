@@ -7,9 +7,12 @@ import Search from "../components/icon/search";
 // import Card from "../components/ui/Card";
 import Signin from "./signin";
 import Register from "./register";
+import { useAuthStore } from "../stores/auth";
 
 type MenuType = "starshop" | "gocdienanh" | "sukien" | "rap" | "phim";
 const Header = () => {
+  const user = useAuthStore(s=>s.user)
+  const {signOut} = useAuthStore()
  
 const [open, setOpen] = useState<boolean>(false);
 const [openSignIn, setOpenSignIn] = useState<boolean>(false)
@@ -344,134 +347,127 @@ scale-100 blur-0 grayscale-0)'
                 <Search />
               </a>
             </div>
-            <button onClick={() => setOpenSignIn(true)} data-dialog-target="modal" className="ml-2 text-sm text-[#777] capitalize cursor-pointer transition-all duration-300 hover:text-[#f26b38]">
-              Đăng nhập
-            </button>
-            <Signin open={openSignIn} setOpen={setOpenSignIn} />
-            <div className="hover">
-              <div className="px-3 py-7 text-left md:cursor-pointer group relative  transition-all duration-300 flex">
-                <a href="#" className="cursor-pointer logo__header grow-0">
-                  <img
-                    src="../../images/join-member-Gstar.svg"
-                    alt="Galaxy - Cinema"
-                    loading="lazy"
-                    width="100"
-                    height="42"
-                    decoding="async"
-                    data-nimg="1"
-                    style={{ color: "transparent" }}
-                  />
-                </a>
-                <div className="absolute top-20 right-0 hidden md:group-hover:block z-[400] transition-all duration-300 ease-in-out">
-                  <div
-                    className="bg-white min-w-[850px] max-w-[1360px] border  border-white border-solid rounded px-6 py-4"
-                    style={{
-                      boxShadow:
-                        "0 6px 16px 0 rgba(0,0,0,.08), 0 3px 6px -4px rgba(0,0,0,.12), 0 9px 28px 8px rgba(0,0,0,.05)",
-                    }}
-                  >
-                  <div className="grid grid-cols-4 gap-5">
-                    {/*  */}
-                    <div className="flex flex-col justify-start items-center gap-4 pt-6">
-                      <img
-                        alt="Image Rules"
-                        loading="lazy"
-                        width={85}
-                        height={80}
-                        decoding="async"
-                        data-nimg={1}
-                        className="w-[85px] h-[80px]"
-                        style={{ color: "transparent" }}
-                        src="../../images/icon-rules.png"
-                      />
-                      <h3 className="text-sm font-bold not-italic capitalize text-center">
-                        Thể lệ
-                      </h3>
-                      <a
-                        className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize"
-                        href="#"
-                      >
-                        Chi tiết
-                      </a>
-                    </div>
-                    {/*  */}
-                    {/*  */}
-                    <div className="flex flex-col justify-start items-center gap-4 pt-6">
-                      <img
-                        alt="Image login"
-                        loading="lazy"
-                        width={85}
-                        height={80}
-                        decoding="async"
-                        data-nimg={1}
-                        className="w-[85px] h-[80px]"
-                        style={{ color: "transparent" }}
-                        src="../../images/icon-login.svg"
-                      />
-                      <h3 className="text-sm font-bold not-italic capitalize text-center">
-                        Quyền lợi
-                      </h3>
-                      <a
-                        className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize"
-                        href="#"
-                      >
-                        Chi tiết
-                      </a>
-                    </div>
-                    {/*  */}
-                    {/*  */}
-                    <div className="flex flex-col justify-start items-center gap-4 pt-6">
-                      <img
-                        alt="Image faq"
-                        loading="lazy"
-                        width={85}
-                        height={80}
-                        decoding="async"
-                        data-nimg={1}
-                        className="w-[85px] h-[80px]"
-                        style={{ color: "transparent" }}
-                        src="../../images/faq.png"
-                      />
-                      <h3 className="text-sm font-bold not-italic capitalize text-center">
-                        Hướng dẫn
-                      </h3>
-                      <a
-                        className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize"
-                        href="#"
-                      >
-                        Chi tiết
-                      </a>
-                    </div>
-                    {/*  */}
-                    <div className="flex flex-col justify-between items-center gap-4">
-                      <img
-                        alt="Image Rules"
-                        loading="lazy"
-                        width={85}
-                        height={80}
-                        decoding="async"
-                        data-nimg={1}
-                        className="w-[85px] h-[80px]"
-                        style={{ color: "transparent" }}
-                        src="/images/bear_glx.png"
-                      />
-                      <h3 className="text-sm font-bold not-italic capitalize text-center">
-                        Đăng Ký Thành Viên G-star Nhận Ngay Ưu Đãi!
-                      </h3>
-                      <button className="w-[96px] h-8 text-white border border-[#f58020] rounded text-[14px] font-bold not-italic bg-[#f58020] hover:text-white transition-all duration-300 ease-in-out focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize cursor-pointer" 
-                      onClick={()=>{setOpenRegister(true)}}>
-                        Đăng ký
-                        
-                      </button>
-                      
-                        
-                      
-                    </div>
-                  </div>
-                  </div>
-                </div>
+            {user ? (
+  <div className="md:px-2 py-4 relative items-center text-left md:cursor-pointer group transition-all duration-500 ease-in-out md:flex hidden">
+    <div className="w-[40px] h-[40px] leading-[62px] text-center rounded-full bg-[#D0D0D0] border-4 border-solid border-[#E9E9E2] flex-none mr-4">
+      <img
+        alt="Avatar"
+        loading="lazy"
+        width={40}
+        height={40}
+        decoding="async"
+        className="w-full h-full rounded-full object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+        src="https://www.galaxycine.vn/_next/static/media/user_default.b1a2ce07.png"
+      />
+    </div>
+    <div className="flex items-center justify-center gap-[6px]">
+      <img
+        alt="Logo Star Mini"
+        loading="lazy"
+        width={20}
+        height={30}
+        decoding="async"
+        className="inline-block w-[20px] h-[30px]"
+        src="https://cdn.galaxycine.vn/media/2020/5/15/s_1589511977688.png"
+        style={{ color: "transparent" }}
+      />
+      <p className="flex-auto md:flex hidden flex-col text-sm font-bold not-italic justify-start items-start md:pr-0 group hover:text-orange-500 transition-all duration-500 ease-in-out capitalize">
+        {user.fullName}
+        <span className="block text-xs font-light not-italic">Star</span>
+      </p>
+    </div>
+
+    {/* Dropdown */}
+    <div className="absolute left-0 w-full min-w-[150px] max-w-[220px] top-15 pt-2 hidden group-hover:md:block hover:md:block z-[500] transition-all duration-500 ease-in-out">
+      <div className="bg-white text-center border border-white border-solid rounded" style={{ boxShadow: "rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px" }}>
+        <ul className="flex flex-col">
+          <li>
+            <a className="text-sm text-left text-black py-2 px-[18px] hover:text-[#f26b38] hover:border-l-4 hover:border-[#fd841f] hover:bg-[#fb770b1a] transition-all duration-300 flex items-center capitalize cursor-pointer">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor" d="M192 0c-41.8 0-77.4 26.7-90.5 64L64 64C28.7 64 0 92.7 0 128L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64l-37.5 0C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM128 256a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM80 432c0-44.2 35.8-80 80-80l64 0c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16L96 448c-8.8 0-16-7.2-16-16z" />
+              </svg>
+              <span className="grow ml-4">Tài khoản</span>
+            </a>
+          </li>
+          <li>
+            <a className="text-sm text-left text-black py-2 px-[18px] hover:text-[#f26b38] hover:border-l-4 hover:border-[#fd841f] hover:bg-[#fb770b1a] transition-all duration-300 flex items-center capitalize cursor-pointer">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor" d="M24 56c0-13.3 10.7-24 24-24l32 0c13.3 0 24 10.7 24 24l0 120 16 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l16 0 0-96-8 0C34.7 80 24 69.3 24 56zM86.7 341.2c-6.5-7.4-18.3-6.9-24 1.2L51.5 357.9c-7.7 10.8-22.7 13.3-33.5 5.6s-13.3-22.7-5.6-33.5l11.1-15.6c23.7-33.2 72.3-35.6 99.2-4.9c21.3 24.4 20.8 60.9-1.1 84.7L86.8 432l33.2 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-88 0c-9.5 0-18.2-5.6-22-14.4s-2.1-18.9 4.3-25.9l72-78c5.3-5.8 5.4-14.6 .3-20.5zM224 64l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 160l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 160l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+              </svg>
+              <span className="grow ml-4">Lịch sử</span>
+            </a>
+          </li>
+          <li>
+            <a onClick={()=>{signOut()}} className="text-sm text-left text-black py-2 px-[18px] hover:text-[#f26b38] hover:border-l-4 hover:border-[#fd841f] hover:bg-[#fb770b1a] transition-all duration-300 flex items-center capitalize cursor-pointer">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4 rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z" />
+              </svg>
+              <span className="grow ml-4">Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+) : (
+  <>
+    <button onClick={() => setOpenSignIn(true)} data-dialog-target="modal" className="ml-2 text-sm text-[#777] capitalize cursor-pointer transition-all duration-300 hover:text-[#f26b38]">
+      Đăng nhập
+    </button>
+    <Signin open={openSignIn} setOpen={setOpenSignIn} />
+    <div className="hover">
+      <div className="px-3 py-7 text-left md:cursor-pointer group relative  transition-all duration-300 flex">
+        <a href="#" className="cursor-pointer logo__header grow-0">
+          <img
+            src="../../images/join-member-Gstar.svg"
+            alt="Galaxy - Cinema"
+            loading="lazy"
+            width="100"
+            height="42"
+            decoding="async"
+            data-nimg="1"
+            style={{ color: "transparent" }}
+          />
+        </a>
+        <div className="absolute top-20 right-0 hidden md:group-hover:block z-[400] transition-all duration-300 ease-in-out">
+          <div
+            className="bg-white min-w-[850px] max-w-[1360px] border border-white border-solid rounded px-6 py-4"
+            style={{
+              boxShadow:
+                "0 6px 16px 0 rgba(0,0,0,.08), 0 3px 6px -4px rgba(0,0,0,.12), 0 9px 28px 8px rgba(0,0,0,.05)",
+            }}
+          >
+            <div className="grid grid-cols-4 gap-5">
+              <div className="flex flex-col justify-start items-center gap-4 pt-6">
+                <img alt="Image Rules" loading="lazy" width={85} height={80} decoding="async" data-nimg={1} className="w-[85px] h-[80px]" style={{ color: "transparent" }} src="../../images/icon-rules.png" />
+                <h3 className="text-sm font-bold not-italic capitalize text-center">Thể lệ</h3>
+                <a className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize" href="#">Chi tiết</a>
+              </div>
+              <div className="flex flex-col justify-start items-center gap-4 pt-6">
+                <img alt="Image login" loading="lazy" width={85} height={80} decoding="async" data-nimg={1} className="w-[85px] h-[80px]" style={{ color: "transparent" }} src="../../images/icon-login.svg" />
+                <h3 className="text-sm font-bold not-italic capitalize text-center">Quyền lợi</h3>
+                <a className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize" href="#">Chi tiết</a>
+              </div>
+              <div className="flex flex-col justify-start items-center gap-4 pt-6">
+                <img alt="Image faq" loading="lazy" width={85} height={80} decoding="async" data-nimg={1} className="w-[85px] h-[80px]" style={{ color: "transparent" }} src="../../images/faq.png" />
+                <h3 className="text-sm font-bold not-italic capitalize text-center">Hướng dẫn</h3>
+                <a className="w-[80px] h-8 leading-8 text-center text-[#f58020] border border-[#f58020] rounded text-[14px] font-bold not-italic hover:bg-[#f58020] hover:text-white transition-all duration-300 focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize" href="#">Chi tiết</a>
+              </div>
+              <div className="flex flex-col justify-between items-center gap-4">
+                <img alt="Image Rules" loading="lazy" width={85} height={80} decoding="async" data-nimg={1} className="w-[85px] h-[80px]" style={{ color: "transparent" }} src="/images/bear_glx.png" />
+                <h3 className="text-sm font-bold not-italic capitalize text-center">Đăng Ký Thành Viên G-star Nhận Ngay Ưu Đãi!</h3>
+                <button className="w-[96px] h-8 text-white border border-[#f58020] rounded text-[14px] font-bold not-italic bg-[#f58020] hover:text-white transition-all duration-300 ease-in-out focus:ring-1 focus:outline-none focus:ring-[#fb9440] capitalize cursor-pointer" onClick={() => { setOpenRegister(true) }}>
+                  Đăng ký
+                </button>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+            
           </div>
 
           {/* reponsive */}

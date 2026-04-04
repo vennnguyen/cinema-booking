@@ -2,6 +2,7 @@ import type { Movie } from "../types/product";
 import type { ShowDetail, ShowTimeSeat } from "./booking";
 import type { comboFood } from "./combo";
 import type { Showtime } from "./showtime";
+import type { User } from "./user";
 interface MovieState {
   movies: Movie[];
   selectedMovie: Movie | null;
@@ -50,4 +51,26 @@ interface FoodState {
   loading: boolean;
   error: string | null;
   fetchFoods: () => Promise<void>;
+}
+
+
+export interface AuthState {
+  accessToken: string | null;
+  user: User | null;
+  loading: boolean;
+
+  setAccessToken: (accessToken: string) => void;
+  clearState: () => void;
+  signUp: (
+    fullName: string,
+    password: string,
+    email: string,
+    phone:string,
+    birthDay:string
+    
+  ) => Promise<void>;
+  signIn: (username: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  fetchMe: () => Promise<void>;
+  refresh: () => Promise<void>;
 }
