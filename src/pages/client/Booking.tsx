@@ -12,6 +12,7 @@ import {
 } from "../../utils/utils";
 import ChoiceFood from "../../components/ui/ChoiceFood";
 import Pay from "../../components/ui/Pay";
+import { ConfirmOrderModal } from "../../layouts/modal";
 
 const STEPS = [
   "Chọn phim / Rạp / Suất",
@@ -22,7 +23,7 @@ const STEPS = [
 ];
 const Booking = () => {
   const { state } = useLocation();
-  
+  const [open, setOpen] = useState(false);
   const { showDetail, fetchShowDetail, resetBooking, selectedCombos } =
     useBookingStore();
   const { selectedSeats, resetSeats } = useSeatStore();
@@ -239,11 +240,21 @@ const Booking = () => {
                 </button>
                 <button
                   disabled={selectedSeats.length === 0}
-                  onClick={handleNext}
+                  onClick={() => {
+    if (step === 3) {
+      setOpen(true);
+    } else {
+      handleNext();
+    }
+  }}
                   className="w-1/2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {step === 3 ? "Xác nhận" : "Tiếp tục"}
+                  {step === 3 ? "Thanh toán" : "Tiếp tục"}
                 </button>
+                <div>
+  
+</div>
+
               </div>
             </div>
 
@@ -319,12 +330,20 @@ const Booking = () => {
                     Quay lại
                   </button>
                   <button
-                    disabled={selectedSeats.length === 0}
-                    onClick={handleNext}
-                    className="px-4 h-10 bg-[rgb(245,128,32)] text-white text-sm rounded-md disabled:opacity-40"
-                  >
-                    {step === 3 ? "Xác nhận" : "Tiếp tục"}
-                  </button>
+  disabled={selectedSeats.length === 0}
+  onClick={() => {
+    if (step === 3) {
+      setOpen(true); // 👉 mở modal
+    } else {
+      handleNext();
+    }
+  }}
+  className="w-1/2 py-2 bg-[rgb(245,128,32)] text-white border rounded-md hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
+>
+  {step === 3 ? "Thanh toán" : "Tiếp tục"}
+</button>
+
+
                 </div>
               </div>
             </div>
@@ -332,6 +351,7 @@ const Booking = () => {
         </div>
       </main>
       <Footer />
+      <ConfirmOrderModal selectCombo={selectedCombos} selectSeats={selectedSeats} showDetail={showDetail} open={open} setOpen={setOpen} />
     </div>
   );
 };
