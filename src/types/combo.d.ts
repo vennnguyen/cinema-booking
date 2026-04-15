@@ -1,9 +1,9 @@
 export interface comboFood {
   comboId: number;
   comboName: string;
-  description: string;
+  description?: string;
   price: string;
-  status: number;
+  status?: number;
 }
 
 export interface SelectedCombo extends comboFood {

@@ -2,25 +2,34 @@ import { useState } from "react";
 import { Modal } from "react-responsive-modal";
 
 import "react-responsive-modal/styles.css";
-import type { Combo, ShowDetail } from "../types/booking";
+import type {  ShowDetail } from "../types/booking";
 import type { Seat } from "../types/seat";
-import { formatTime } from "../utils/utils";
+import { calculateTotalPrice, formatTime } from "../utils/utils";
+import type { SelectedCombo } from "../types/combo";
+import useOrder from "../stores/order";
+import { useAuthStore } from "../stores/auth";
 type Props = {
   open: boolean;
   setOpen: (value: boolean) => void;
   showDetail: ShowDetail | null,
   selectSeats: Seat[],
-  selectCombo: Combo[]
+  selectCombos: SelectedCombo[]
 };
-export const ConfirmOrderModal= ({ open, setOpen, selectCombo,selectSeats,showDetail }: Props) => {
+export const ConfirmOrderModal= ({ open, setOpen, selectCombos,selectSeats,showDetail }: Props) => {
 
   const [checked, setChecked] = useState(false);
-console.log(selectCombo,selectSeats,showDetail);
+console.log(selectCombos,selectSeats,showDetail);
 
+  const {createOrder, createPayment} = useOrder()
+  const user = useAuthStore((s)=>s.user)
+  const total = calculateTotalPrice(
+                                    selectSeats,
+                                    selectCombos,
+                                  )
   const handleConfirm = async () => {
-    console.log("Thanh toán...");
-    // TODO: gọi API create order + payment
-    setOpen(false);
+   await createOrder(user?.userId, total)
+   await createPayment()
+    // setOpen(false);
   };
 
   return (
@@ -49,7 +58,7 @@ console.log(selectCombo,selectSeats,showDetail);
           <div className="flex gap-x-4 my-3 items-start">
             <p className="text-[14px] font-bold w-[50px]">Rạp</p>
             <div className="border border-[#DCD8D8] flex-1 p-3">
-              <p className="font-bold text-blue-600">
+              <p className="font-bold text-[#1353B4]">
                 {showDetail?.room.cinema.cinemaName}
               </p>
               <p className="text-sm">
@@ -76,8 +85,23 @@ console.log(selectCombo,selectSeats,showDetail);
             <p className="text-[14px] font-bold w-[50px]"></p>
             <div className="border border-[#DCD8D8] flex-1 p-3">
               <p className="text-sm">
-                Ghế: <strong>E2, E1</strong>
+                <strong>{showDetail?.room.roomName}</strong>
+              </p><p className="text-sm">
+                Ghế: {
+  selectSeats
+    .map(item => `${item.seatRow}${item.seatColumn}`)
+    .join(", ")
+}
               </p>
+              <p className="text-sm">
+  {selectCombos?.length > 0 &&
+    selectCombos.map((item, index) => (
+      <div key={index}>
+        <strong>x{item.quantity}</strong> {item.comboName}
+      </div>
+    ))
+  }
+</p>
             </div>
           </div>
 
@@ -85,21 +109,40 @@ console.log(selectCombo,selectSeats,showDetail);
           <div className="flex gap-x-4 my-5 items-center">
             <p className="font-bold w-[50px]">Tổng</p>
             <div className="flex-1 bg-[#1353B4] text-white font-bold px-3 py-2">
-              600.000 VNĐ
+               {calculateTotalPrice(
+                                    selectSeats,
+                                    selectCombos,
+                                  ).toLocaleString("vi-VN")}{" "}
+                                  ₫
             </div>
           </div>
 
           {/* Checkbox */}
-          <div className="flex items-center mt-4">
+          <div className="flex items-center mt-4 gap-x-10 my-5">
             <input
               type="checkbox"
               checked={checked}
               onChange={(e) => setChecked(e.target.checked)}
               className="mr-2 accent-[#f58020]"
             />
-            <p className="text-sm">
-              Tôi xác nhận thông tin là chính xác
-            </p>
+           <div>
+            <p className="text-md italic">
+  Tôi xác nhận thông tin là chính xác
+</p>
+
+<p className="text-md italic">
+  Tôi đồng ý các{" "}
+  <span className="text-[rgb(249,115,22)] not-italic font-medium">
+    Điều khoản dịch vụ
+  </span>{" "}
+  và{" "}
+  <span className="text-[rgb(249,115,22)] not-italic font-medium">
+    Chính sách bảo mật & Chia sẻ thông tin
+  </span>{" "}
+  của Galaxy Cinema.
+</p>
+           </div>
+            
           </div>
 
           {/* Button */}

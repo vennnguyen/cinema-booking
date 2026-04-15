@@ -14,8 +14,9 @@ export interface ShowTimeSeat {
 export interface Combo {
   comboId: number;
   comboName: string;
-  image: string;
+  image?: string;
   price: number;
+  quantity: number;
 }
 
 export interface ShowDetail {

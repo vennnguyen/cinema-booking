@@ -14,6 +14,7 @@ import ChoiceFood from "../../components/ui/ChoiceFood";
 import Pay from "../../components/ui/Pay";
 import { ConfirmOrderModal } from "../../layouts/modal";
 
+
 const STEPS = [
   "Chọn phim / Rạp / Suất",
   "Chọn ghế",
@@ -27,6 +28,7 @@ const Booking = () => {
   const { showDetail, fetchShowDetail, resetBooking, selectedCombos } =
     useBookingStore();
   const { selectedSeats, resetSeats } = useSeatStore();
+
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {
@@ -333,7 +335,7 @@ const Booking = () => {
   disabled={selectedSeats.length === 0}
   onClick={() => {
     if (step === 3) {
-      setOpen(true); // 👉 mở modal
+      setOpen(true);
     } else {
       handleNext();
     }
@@ -351,7 +353,7 @@ const Booking = () => {
         </div>
       </main>
       <Footer />
-      <ConfirmOrderModal selectCombo={selectedCombos} selectSeats={selectedSeats} showDetail={showDetail} open={open} setOpen={setOpen} />
+      <ConfirmOrderModal selectCombos={selectedCombos} selectSeats={selectedSeats} showDetail={showDetail} open={open} setOpen={setOpen} />
     </div>
   );
 };

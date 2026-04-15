@@ -52,6 +52,12 @@ interface FoodState {
   error: string | null;
   fetchFoods: () => Promise<void>;
 }
+interface OrderState {
+  loading: boolean;
+  error: string | null;
+  createOrder: (userId:number|undefined, totalPrice:number) => Promise<void>;
+  createPayment:() => Promise<void>;
+}
 
 
 export interface AuthState {
