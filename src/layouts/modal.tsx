@@ -24,12 +24,11 @@ console.log(selectCombos,selectSeats,showDetail);
   const user = useAuthStore((s)=>s.user)
   const total = calculateTotalPrice(
                                     selectSeats,
-                                    selectCombos,
+                                    selectCombos,user
                                   )
   const handleConfirm = async () => {
    await createOrder(user?.userId, total)
    await createPayment()
-    // setOpen(false);
   };
 
   return (
@@ -111,7 +110,7 @@ console.log(selectCombos,selectSeats,showDetail);
             <div className="flex-1 bg-[#1353B4] text-white font-bold px-3 py-2">
                {calculateTotalPrice(
                                     selectSeats,
-                                    selectCombos,
+                                    selectCombos,user
                                   ).toLocaleString("vi-VN")}{" "}
                                   ₫
             </div>

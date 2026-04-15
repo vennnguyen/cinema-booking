@@ -4,6 +4,7 @@ import type { SeatState } from "../types/store";
 import { seatService } from "../services/seat.service";
 import type { Seat } from "../types/seat";
 
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 

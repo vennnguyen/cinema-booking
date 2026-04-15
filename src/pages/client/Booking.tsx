@@ -13,6 +13,7 @@ import {
 import ChoiceFood from "../../components/ui/ChoiceFood";
 import Pay from "../../components/ui/Pay";
 import { ConfirmOrderModal } from "../../layouts/modal";
+import { useAuthStore } from "../../stores/auth";
 
 
 const STEPS = [
@@ -38,11 +39,18 @@ const Booking = () => {
       resetSeats();
     };
   }, []);
+  const user = useAuthStore(s=>s.user)
   // group theo ghế trên 1 hàng
   const groupedSelected = useMemo(
-    () => groupSelectedSeats(selectedSeats),
-    [selectedSeats],
+    () => groupSelectedSeats(selectedSeats, user),
+    [selectedSeats, user],
   );
+  
+
+  
+
+
+  
   const handleNext = () => {
     if (step < 3) setStep((s) => (s + 1) as 1 | 2 | 3);
   };
@@ -224,7 +232,7 @@ const Booking = () => {
                   <span className="font-bold text-[rgb(245,128,32)]">
                     {calculateTotalPrice(
                       selectedSeats,
-                      selectedCombos,
+                      selectedCombos,user
                     ).toLocaleString("vi-VN")}
                     &nbsp;₫
                   </span>
@@ -318,7 +326,7 @@ const Booking = () => {
                   <span className="font-bold text-[rgb(245,128,32)]">
                     {calculateTotalPrice(
                       selectedSeats,
-                      selectedCombos,
+                      selectedCombos,user
                     ).toLocaleString("vi-VN")}{" "}
                     ₫
                   </span>

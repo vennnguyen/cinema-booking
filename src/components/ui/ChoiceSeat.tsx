@@ -15,13 +15,16 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
   }, [roomId]);
 
   const grouped = useMemo(() => groupSeatsByRow(seats), [seats]);
-
+  console.log(grouped);
+  
   const selectedIds = new Set(selectedSeats.map((s) => s.seatId));
 
   const toggle = (seatIds: number[]) => {
     const firstSeat = seats.find((s) => s.seatId === seatIds[0]);
     if (firstSeat) toggleSeat(firstSeat, seats);
   };
+ 
+  
 
   return (
     <div>

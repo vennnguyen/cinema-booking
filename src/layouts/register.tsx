@@ -11,6 +11,7 @@ import "react-calendar/dist/Calendar.css";
 import { useAuthStore } from "../stores/auth"
 
 
+
 interface RegisterProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,7 +60,10 @@ const Register: React.FC<RegisterProps> = ({ open, setOpen }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = async (data: RegisterFormValues) => {
     const { email, password, phone, birthDay, fullName } = data;
+   
+    
     const dateOfBirth = birthDay ? birthDay.toISOString().split("T")[0] : "";
+    
     await signUp(fullName, password, email, phone, dateOfBirth);
     reset();
     setOpen(false);  

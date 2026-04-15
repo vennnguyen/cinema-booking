@@ -1,19 +1,45 @@
 import type { SelectedCombo } from "../types/combo";
 import type { Seat } from "../types/seat";
 import type { Showtime } from "../types/showtime";
+import type { User } from "../types/user";
+const getAge = (dob: string) => {
+  const birth = new Date(dob);
+  if (isNaN(birth.getTime())) return null;
 
-// utils/utils.ts
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  return age;
+};
+const getPriceByAge = (seat: Seat, age: number | null) => {
+  const normalPrice = Number(seat.prices?.[0]?.price ?? 0);
+  const specialPrice = Number(seat.prices?.[1]?.price ?? normalPrice);
+
+  if (age !== null && (age <= 22 || age >= 60)) {
+    return specialPrice;
+  }
+
+  return normalPrice;
+};
 export const calculateTotalPrice = (
   selectedSeats: Seat[],
   selectedCombos: SelectedCombo[] = [],
+  user: User | null
 ) => {
+  const age = user?.dateOfBirth ? getAge(user.dateOfBirth) : null;
+
   const seatTotal = selectedSeats
     .filter((s) => s.isPrimary !== false)
-    .reduce((sum, s) => sum + Number(s.prices?.[0]?.price ?? 0), 0);
+    .reduce((sum, s) => sum + getPriceByAge(s, age), 0);
 
   const comboTotal = selectedCombos.reduce(
     (sum, c) => sum + Number(c.price) * c.quantity,
-    0,
+    0
   );
 
   return seatTotal + comboTotal;
@@ -33,36 +59,72 @@ export const formatTime = (timeStr: string) => {
   });
 };
 //chia loại ghế theo hàng Ghế thường D1,D2,D3 Vip H1,H2
-export const groupSelectedSeats = (selectedSeats: Seat[]) => {
+export const groupSelectedSeats = (
+  selectedSeats: Seat[],
+  user: User | null
+) => {
   const primary = selectedSeats.filter((s) => s.isPrimary !== false);
 
+  // ===== TÍNH TUỔI =====
+  const getAge = (dob: string) => {
+    const birth = new Date(dob);
+    if (isNaN(birth.getTime())) return null;
+
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const age = user?.dateOfBirth ? getAge(user.dateOfBirth) : null;
+
+  // ===== CHỌN GIÁ =====
+  const getPriceByAge = (seat: Seat) => {
+    const normalPrice = Number(seat.prices?.[0]?.price ?? 0);
+    const specialPrice = Number(seat.prices?.[1]?.price ?? normalPrice);
+
+    if (age === null) return normalPrice;
+
+    if (age <= 22 || age >= 60) {
+      return specialPrice;
+    }
+
+    return normalPrice;
+  };
+
+  // ===== GROUP GHẾ =====
   const thuong = primary.filter((s) => s.seatTypeId === 1);
   const vip = primary.filter((s) => s.seatTypeId === 2);
   const doi = primary.filter((s) => s.seatTypeId === 3);
 
   const result = [];
 
+  // ===== GHẾ THƯỜNG =====
   if (thuong.length) {
     result.push({
       label: "Ghế thường",
       seatLabel: thuong.map((s) => `${s.seatRow}${s.seatColumn}`).join(", "),
-      price: thuong.reduce(
-        (sum, s) => sum + Number(s.prices?.[0]?.price ?? 0),
-        0,
-      ),
+      price: thuong.reduce((sum, s) => sum + getPriceByAge(s), 0),
       count: thuong.length,
     });
   }
 
+  // ===== GHẾ VIP =====
   if (vip.length) {
     result.push({
       label: "Ghế VIP",
       seatLabel: vip.map((s) => `${s.seatRow}${s.seatColumn}`).join(", "),
-      price: vip.reduce((sum, s) => sum + Number(s.prices?.[0]?.price ?? 0), 0),
+      price: vip.reduce((sum, s) => sum + getPriceByAge(s), 0),
       count: vip.length,
     });
   }
 
+  // ===== GHẾ ĐÔI =====
   if (doi.length) {
     result.push({
       label: "Ghế đôi",
@@ -70,20 +132,23 @@ export const groupSelectedSeats = (selectedSeats: Seat[]) => {
         .map((s) => {
           const partnerColumn =
             s.seatColumn % 2 === 0 ? s.seatColumn - 1 : s.seatColumn + 1;
+
           const partner = selectedSeats.find(
             (p) =>
               p.isPrimary === false &&
               p.seatRow === s.seatRow &&
-              p.seatColumn === partnerColumn,
+              p.seatColumn === partnerColumn
           );
-          return `${s.seatRow}${s.seatColumn}·${s.seatRow}${partner?.seatColumn ?? "?"}`;
+
+          return `${s.seatRow}${s.seatColumn}·${s.seatRow}${
+            partner?.seatColumn ?? "?"
+          }`;
         })
         .join(", "),
-      price: doi.reduce((sum, s) => sum + Number(s.prices?.[0]?.price ?? 0), 0),
+      price: doi.reduce((sum, s) => sum + getPriceByAge(s), 0),
       count: doi.length,
     });
   }
-
   return result;
 };
 
