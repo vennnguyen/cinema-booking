@@ -44,7 +44,7 @@ export const calculateTotalPrice = (
 
   return seatTotal + comboTotal;
 };
-export const formatTime = (timeStr: string) => {
+export const formatTime = (timeStr: string|undefined) => {
   if (!timeStr) return "";
 
   if (timeStr.includes(":") && timeStr.length <= 8) {
@@ -179,7 +179,13 @@ export const filterShowtimesByDate = (
     return showDate === selectedDate;
   });
 };
-
+export const formatDate = (isoDate: string): string => {
+  return new Date(isoDate).toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
 export const groupShowtimesByCinema = (
   showtimes: Showtime[],
 ): Record<string, Record<string, Showtime[]>> => {
