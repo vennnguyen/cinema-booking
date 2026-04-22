@@ -8,18 +8,32 @@ import Location from "../../components/icon/location";
 import CardHome from "../../components/ui/CardHome";
 import ArrowRight from "../../components/icon/arrowRight";
 import useMovieStore from "../../stores/product";
+import PaymentSuccessModal from "../../layouts/PaymentSuccessModal";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const { movies, fetchMovies } = useMovieStore();
 
   useEffect(() => {
     fetchMovies();
-    
+
+    // Kiểm tra kết quả thanh toán VNPay
+    const params = new URLSearchParams(window.location.search);
+    const responseCode = params.get("vnp_ResponseCode");
+    if (responseCode === "00") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowPaymentSuccess(true);
+      window.history.replaceState({}, document.title, "/");
+    }
   }, []);
   return (
     <div>
       <Header />
+
+      {showPaymentSuccess && (
+        <PaymentSuccessModal onClose={() => setShowPaymentSuccess(false)} />
+      )}
       <main className="home-main min-h[100vh]">
         <HeroSlider />
         {/* main content */}

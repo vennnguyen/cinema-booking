@@ -6,8 +6,4 @@ export const paymentService = {
     const res = await api.post(`/payment/create-payment`);
     return res.data;
   },
-  callBackPayment: async () => {
-    const res = await api.get(`/payment/vnpay-callback`);
-    return res.data;
-  },
 };

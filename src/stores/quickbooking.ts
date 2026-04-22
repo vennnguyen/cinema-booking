@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import api from "../lib/axios";
 
-type Movie = { movieId: number; movieName: string };
+type Movie = { movieId: number; movieName: string; slug:string };
 type Cinema = { cinemaId: number; cinemaName: string };
 type Showtime = { showId: number; startTime: string };
 
