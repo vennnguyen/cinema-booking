@@ -16,6 +16,7 @@ import { ConfirmOrderModal } from "../../layouts/modal";
 import { useAuthStore } from "../../stores/auth";
 import { useBookingTimer } from "../../hooks/useBookingTimer";
 import { toast } from "sonner";
+import { getSocket } from "../../stores/socket";
 
 
 const STEPS = [
@@ -52,6 +53,15 @@ const navigate = useNavigate();
   useEffect(() => {
     fetchShowDetail(state.showId);
     return () => {
+      const { selectedSeats, showId } = useSeatStore.getState();
+
+      if (selectedSeats.length > 0 && showId) {
+        const socket = getSocket();
+        socket.emit("release_seat", {
+          showId,
+          seatIds: selectedSeats.map((s) => s.seatId),
+        });
+      }
       resetBooking();
       resetSeats();
     };
@@ -68,9 +78,44 @@ const navigate = useNavigate();
     if (step < 3) setStep((s) => (s + 1) as 1 | 2 | 3);
   };
 
-  const handleBack = () => {
-    if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+ const handleBack = () => {
+  if (step > 1) {
+    setStep((s) => (s - 1) as 1 | 2 | 3);
+  } else {
+    // Đang ở step 1, bấm quay lại → release ghế + về trang trước
+    const { selectedSeats, showId } = useSeatStore.getState();
+
+    if (selectedSeats.length > 0 && showId) {
+      const socket = getSocket();
+      socket.emit("release_seat", {
+        showId,
+        seatIds: selectedSeats.map((s) => s.seatId),
+      });
+    }
+
+    resetSeats();
+    resetBooking();
+    navigate(-1); // hoặc navigate("/") về trang chủ
+  }
+};
+useEffect(() => {
+  const handleBeforeUnload = () => {
+    const { selectedSeats, showId } = useSeatStore.getState();
+    if (selectedSeats.length > 0 && showId) {
+      const socket = getSocket();
+      socket.emit("release_seat", {
+        showId,
+        seatIds: selectedSeats.map((s) => s.seatId),
+      });
+    }
   };
+
+  window.addEventListener("beforeunload", handleBeforeUnload);
+
+  return () => {
+    window.removeEventListener("beforeunload", handleBeforeUnload);
+  };
+}, []);
   return (
     <div>
       <Header />
@@ -273,7 +318,7 @@ const navigate = useNavigate();
                 <button
                   className="w-1/2 py-2 text-[rgb(245,128,32)]"
                   onClick={handleBack}
-                  disabled={step === 1}
+                  // disabled={step === 1}
                 >
                   Quay lại
                 </button>
@@ -364,7 +409,7 @@ const navigate = useNavigate();
                   <button
                     className="px-4 h-10 text-[rgb(245,128,32)] text-sm"
                     onClick={handleBack}
-                    disabled={step === 1}
+                    // disabled={step === 1}
                   >
                     Quay lại
                   </button>

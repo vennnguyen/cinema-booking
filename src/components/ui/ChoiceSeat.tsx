@@ -74,28 +74,33 @@ console.log(seats);
                             Boolean,
                           ) as number[])
                         : [seat.seatId];
-                      const isBooked = seat.status === "BOOKED"
-                      const isSelected = selectedIds.has(seat.seatId);
+                      const isBooked = seat.status === "BOOKED";
+const isHoldingByOther =
+  seat.status === "HOLDING" &&
+  !selectedIds.has(seat.seatId);
+const isSelected = selectedIds.has(seat.seatId);
 
-                      const seatClass = isBooked
-                        ? "bg-gray-100 border-gray-200 text-gray-300 cursor-not-allowed"
-                        : isSelected
-                          ? seat.seatTypeId === 2
-                            ? "bg-[#BA7517] border-[#854F0B] text-[#FAEEDA] scale-110"
-                            : seat.seatTypeId === 3
-                              ? "bg-[#D4537E] border-[#993556] text-[#FBEAF0] scale-105"
-                              : "bg-[#034ea2] border-[#023a7a] text-white scale-110"
-                          : seat.seatTypeId === 2
-                            ? "bg-[#FAEEDA] border-[#EF9F27] text-[#854F0B] hover:bg-[#FAC775]"
-                            : seat.seatTypeId === 3
-                              ? "bg-[#FBEAF0] border-[#ED93B1] text-[#72243E] hover:bg-[#F4C0D1]"
-                              : "bg-white border-gray-300 text-gray-600 hover:border-[#034ea2] hover:text-[#034ea2]";
-
+const seatClass =
+  isBooked
+    ? "bg-gray-100 border-gray-200 text-gray-300 cursor-not-allowed"
+    : isHoldingByOther
+      ? "bg-yellow-50 border-yellow-300 text-yellow-400 cursor-not-allowed"
+      : isSelected
+        ? seat.seatTypeId === 2
+          ? "bg-[#BA7517] border-[#854F0B] text-[#FAEEDA] scale-110"
+          : seat.seatTypeId === 3
+            ? "bg-[#D4537E] border-[#993556] text-[#FBEAF0] scale-105"
+            : "bg-[#034ea2] border-[#023a7a] text-white scale-110"
+        : seat.seatTypeId === 2
+          ? "bg-[#FAEEDA] border-[#EF9F27] text-[#854F0B] hover:bg-[#FAC775]"
+          : seat.seatTypeId === 3
+            ? "bg-[#FBEAF0] border-[#ED93B1] text-[#72243E] hover:bg-[#F4C0D1]"
+            : "bg-white border-gray-300 text-gray-600 hover:border-[#034ea2] hover:text-[#034ea2]";
                       return (
                         <React.Fragment key={seat.seatId}>
                           {i === mid && <div className="w-3 flex-shrink-0" />}
                           <button
-                            disabled={isBooked}
+                            disabled={isBooked || isHoldingByOther}
                             onClick={() => toggle(ids)}
                             title={`${seat.seatRow}${seat.seatColumn} - ${seat.prices?.[0]?.price?.toLocaleString() ?? ""}₫`}
                             className={`h-7 rounded-t-md rounded-b-sm border-[1.5px] text-[10px] font-medium transition-all duration-150 flex-shrink-0 ${isCouple ? "w-16" : "w-7"} ${seatClass}`}
@@ -123,6 +128,10 @@ console.log(seats);
               <span className="w-5 h-5 rounded bg-gray-100 border border-gray-200 inline-block" />
               <span className="text-xs text-gray-500">Đã bán</span>
             </div>
+            <div className="flex items-center gap-1.5">
+      <span className="w-5 h-5 rounded bg-yellow-50 border border-yellow-300 inline-block" />
+      <span className="text-xs text-gray-500">Đang được giữ</span>
+    </div>
             <div className="flex items-center gap-1.5">
               <span className="w-5 h-5 rounded bg-[#034ea2] inline-block" />
               <span className="text-xs text-gray-500">Đang chọn</span>

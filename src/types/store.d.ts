@@ -40,9 +40,10 @@ interface SeatState {
   selectedSeats: Seat[];
   loading: boolean;
   error: string | null;
-
+showId: number | null;
   fetchSeats: (showId: number) => Promise<void>;
   toggleSeat: (seat: Seat, allSeats: Seat[]) => void;
+  updateSeatStatus: (updatedSeats: { seatId: number; status: string }[]) => void;
   resetSeats: () => void;
 }
 interface ComboInput {
