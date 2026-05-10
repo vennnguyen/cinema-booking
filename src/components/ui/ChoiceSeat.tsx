@@ -4,18 +4,20 @@ import { formatTime, groupSeatsByRow } from "../../utils/utils";
 
 type Props = {
   startTime: string;
-  roomId: number;
+  showId: number;
 };
 
-const ChoiceSeat = ({ startTime, roomId }: Props) => {
+const ChoiceSeat = ({ startTime, showId }: Props) => {
   const { seats, fetchSeats, selectedSeats, toggleSeat } = useSeatStore();
 
   useEffect(() => {
-    fetchSeats(roomId);
-  }, [roomId]);
+    fetchSeats(showId);
+  }, [showId]);
+
+console.log(seats);
 
   const grouped = useMemo(() => groupSeatsByRow(seats), [seats]);
-  console.log(grouped);
+
   
   const selectedIds = new Set(selectedSeats.map((s) => s.seatId));
 
@@ -23,6 +25,7 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
     const firstSeat = seats.find((s) => s.seatId === seatIds[0]);
     if (firstSeat) toggleSeat(firstSeat, seats);
   };
+
  
   
 
@@ -71,7 +74,7 @@ const ChoiceSeat = ({ startTime, roomId }: Props) => {
                             Boolean,
                           ) as number[])
                         : [seat.seatId];
-                      const isBooked = !seat.status;
+                      const isBooked = seat.status === "BOOKED"
                       const isSelected = selectedIds.has(seat.seatId);
 
                       const seatClass = isBooked

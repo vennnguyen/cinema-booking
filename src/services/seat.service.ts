@@ -1,8 +1,8 @@
 import api from "../lib/axios";
 
 export const seatService = {
-  getSeatByTheater: async (roomId: number) => {
-    const res = await api.get(`/seat`, { params: { id: roomId } });
+  getSeatByTheater: async (showId: number) => {
+    const res = await api.get(`/seat`, { params: { id: showId } });
     return res.data;
   },
 };

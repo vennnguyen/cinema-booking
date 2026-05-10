@@ -10,17 +10,22 @@ export interface Price {
   ticketTypeName: string;
   price: number;
 }
+
+export type SeatStatus = "AVAILABLE" | "HOLDING" | "BOOKED";
+
 export interface Seat {
+  showTimeSeatId: number;
   seatId: number;
-  seatTypeId: number;
-  roomId: number;
   seatRow: string;
   seatColumn: number;
-  status: boolean;
   seattype: SeatType;
+  seatTypeId: number;
+  status: SeatStatus;
+  heldUntil: string | null;
   prices: Price[];
-  isPrimary?: boolean; //dùng để không tính tiền 2 lần ghế đôi
+  isPrimary?: boolean; // dùng để không tính tiền 2 lần ghế đôi
 }
+
 export interface SeatResponse {
   data: Seat[];
 }

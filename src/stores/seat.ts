@@ -32,7 +32,7 @@ const useSeatStore = create<SeatState>((set, get) => ({
 
   toggleSeat: (seat: Seat, allSeats: Seat[]) => {
     const { selectedSeats } = get();
-    const isCoupleSeat = seat.seattype?.seatTypeId === 3;
+    const isCoupleSeat = seat.seatTypeId === 3;
 
     if (isCoupleSeat) {
       // Tìm ghế cặp đôi liền kề (cùng hàng, column lẻ-chẵn)
@@ -43,9 +43,10 @@ const useSeatStore = create<SeatState>((set, get) => ({
         (s) =>
           s.seatRow === seat.seatRow &&
           s.seatColumn === partnerColumn &&
-          s.seattype?.seatTypeId === 3,
+          s.seatTypeId === 3,
       );
-
+      console.log(partnerSeat);
+      
       const isSelected = selectedSeats.some((s) => s.seatId === seat.seatId);
 
       if (isSelected) {

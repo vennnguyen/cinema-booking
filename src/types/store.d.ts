@@ -45,7 +45,15 @@ interface SeatState {
   toggleSeat: (seat: Seat, allSeats: Seat[]) => void;
   resetSeats: () => void;
 }
+interface ComboInput {
+  comboId: number;
+  quantity: number;
+}
 
+interface SeatInput {
+  seatId: number;
+  seatTypeId: number;
+}
 interface FoodState {
   combo: comboFood[];
   comboSelected: comboFood[] | null;
@@ -56,7 +64,7 @@ interface FoodState {
 interface OrderState {
   loading: boolean;
   error: string | null;
-  createOrder: (userId:number|undefined, totalPrice:number) => Promise<void>;
+  createOrder: (userId:number|undefined, showId: number, combos: ComboInput[],seats: SeatInput[]) => Promise<void>;
   createPayment:() => Promise<void>;
 }
 

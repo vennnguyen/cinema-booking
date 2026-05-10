@@ -18,16 +18,18 @@ type Props = {
 export const ConfirmOrderModal= ({ open, setOpen, selectCombos,selectSeats,showDetail }: Props) => {
 
   const [checked, setChecked] = useState(false);
-console.log(selectCombos,selectSeats,showDetail);
+
 
   const {createOrder, createPayment} = useOrder()
   const user = useAuthStore((s)=>s.user)
-  const total = calculateTotalPrice(
-                                    selectSeats,
-                                    selectCombos,user
-                                  )
+  
   const handleConfirm = async () => {
-   await createOrder(user?.userId, total)
+  await createOrder(
+  user?.userId,
+  showDetail.showId,
+  selectCombos.map(c => ({ comboId: c.comboId, quantity: c.quantity })),
+  selectSeats.map(s => ({ seatId: s.seatId, seatTypeId: s.seatTypeId }))
+);
    await createPayment()
   };
 

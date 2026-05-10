@@ -126,23 +126,24 @@ export const groupSelectedSeats = (
 
   // ===== GHẾ ĐÔI =====
   if (doi.length) {
+    console.log(doi);
+    
     result.push({
       label: "Ghế đôi",
       seatLabel: doi
         .map((s) => {
           const partnerColumn =
             s.seatColumn % 2 === 0 ? s.seatColumn - 1 : s.seatColumn + 1;
-
+          
           const partner = selectedSeats.find(
             (p) =>
-              p.isPrimary === false &&
+              !p.isPrimary &&
               p.seatRow === s.seatRow &&
-              p.seatColumn === partnerColumn
+              p.seatColumn === partnerColumn 
           );
-
-          return `${s.seatRow}${s.seatColumn}·${s.seatRow}${
-            partner?.seatColumn ?? "?"
-          }`;
+          console.log(partner);
+          
+          return `${s.seatRow}${s.seatColumn}-${s.seatRow}${partner?.seatColumn ?? "?"}`;
         })
         .join(", "),
       price: doi.reduce((sum, s) => sum + getPriceByAge(s), 0),

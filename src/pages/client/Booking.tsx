@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Header from "../../layouts/header";
 import Footer from "../../layouts/footer";
 import ChoiceSeat from "../../components/ui/ChoiceSeat";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useBookingStore from "../../stores/booking";
 import useSeatStore from "../../stores/seat";
 import {
@@ -14,6 +14,8 @@ import ChoiceFood from "../../components/ui/ChoiceFood";
 import Pay from "../../components/ui/Pay";
 import { ConfirmOrderModal } from "../../layouts/modal";
 import { useAuthStore } from "../../stores/auth";
+import { useBookingTimer } from "../../hooks/useBookingTimer";
+import { toast } from "sonner";
 
 
 const STEPS = [
@@ -28,10 +30,25 @@ const Booking = () => {
   const [open, setOpen] = useState(false);
   const { showDetail, fetchShowDetail, resetBooking, selectedCombos } =
     useBookingStore();
-  const { selectedSeats, resetSeats } = useSeatStore();
+
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
+const navigate = useNavigate();
+  const { selectedSeats, resetSeats } = useSeatStore();
 
+  // Timer chỉ active khi đã chọn ít nhất 1 ghế
+  const hasSeats = selectedSeats.length > 0;
+
+  const handleExpire = () => {
+    resetSeats();
+    resetBooking();
+    toast.error("Hết thời gian giữ chỗ! Vui lòng đặt lại.", {
+      duration: 4000,
+    });
+    navigate("/");
+  };
+
+  const { formatted, timeLeft } = useBookingTimer(hasSeats, handleExpire);
   useEffect(() => {
     fetchShowDetail(state.showId);
     return () => {
@@ -39,18 +56,14 @@ const Booking = () => {
       resetSeats();
     };
   }, []);
+
+  
   const user = useAuthStore(s=>s.user)
   // group theo ghế trên 1 hàng
   const groupedSelected = useMemo(
     () => groupSelectedSeats(selectedSeats, user),
     [selectedSeats, user],
-  );
-  
-
-  
-
-
-  
+  );  
   const handleNext = () => {
     if (step < 3) setStep((s) => (s + 1) as 1 | 2 | 3);
   };
@@ -98,7 +111,7 @@ const Booking = () => {
             {step === 1 && showDetail && (
               <ChoiceSeat
                 startTime={showDetail.startTime}
-                roomId={showDetail.room.roomId}
+                showId={showDetail.showId}
               />
             )}
             {step === 2 && <ChoiceFood />}
@@ -107,6 +120,22 @@ const Booking = () => {
 
           {/* Bên phải — tóm tắt */}
           <div className="col-span-1 xl:pl-4 xl:order-0 order-first py-4">
+            {/* Hiển thị đếm ngược khi đã chọn ghế */}
+{hasSeats && (
+  <div
+    className={`flex items-center gap-2 text-sm font-semibold px-3 py-1.5 rounded-full
+      ${timeLeft <= 60 
+        ? "bg-red-100 text-red-600 animate-pulse" 
+        : "bg-orange-50 text-orange-500"
+      }`}
+  >
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    Giữ chỗ: {formatted}
+  </div>
+)}
             <div className="booking__summary md:mb-4">
               <div className="h-[6px] bg-[rgb(245,128,32)] rounded-t-lg" />
               <div className="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">

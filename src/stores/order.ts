@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { OrderState } from "../types/store";
+import type { ComboInput, OrderState, SeatInput } from "../types/store";
 import { toast } from "sonner";
 import { orderService } from "../services/order.service";
 import { paymentService } from "../services/payment.service";
@@ -8,10 +8,10 @@ import { paymentService } from "../services/payment.service";
 const useOrder = create<OrderState>((set)=>({
     loading: false,
   error: null,
- createOrder: async (userId: number | undefined, totalPrice: number) => {
+ createOrder: async (userId:number|undefined, showId: number, combos: ComboInput[],seats: SeatInput[]) => {
     set({ loading: true, error: null });
     try {
-      const order = await orderService.createOrder(userId, totalPrice);
+      const order = await orderService.createOrder(userId, showId,combos,seats);
       set({ loading: false });
     } catch (error: any) {
       const message =
